@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [Swift] 타입체크(TypeCheck)와 타입캐스팅(Type Casing) - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/05/25/Swift/타입체크(TypeCheck)/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Swift_logo_color.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                            
+                        </div>
+                        <h1>[Swift] 타입체크(TypeCheck)와 타입캐스팅(Type Casing)</h1>
+                        <h2 class="subheading">타입체크(TypeCheck)와 타입캐스팅(Type Casing)에 대해 알아 보곘습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-05-25
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="타입-체크typecheck">타입 체크(TypeCheck)</span></h1>
+<p>스위프트의 타입캐스팅은 <code>is</code>와 <code>as</code>로 구현되어있고, 인스턴스의 타입을 확인하거나 자신을 다른 타입의 인스턴스인것처럼 사용될 수 있습니단.</p>
+<h2><span id="typeof-타입확인">type(of:) - 타입확인</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">className</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> anyArray: [<span class="type">Any</span>] = [<span class="number">1</span>, <span class="string">"2"</span>, <span class="number">3.0</span>]</span><br><span class="line"><span class="keyword">var</span> anyObjectArray: [<span class="type">AnyObject</span>] = [className()]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printGenericInfo</span>&lt;T&gt;<span class="params">(<span class="number">_</span> value: T)</span></span> &#123;</span><br><span class="line">  <span class="keyword">let</span> types = type(of: value)</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"'\(value)' of type '\(types)'"</span>)</span><br><span class="line">&#125;</span><br><span class="line">printGenericInfo(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">type(of: anyArray)      <span class="comment">// Array&lt;Any&gt;</span></span><br><span class="line">type(of: anyObjectArray)    <span class="comment">// Array&lt;AnyObject&gt;</span></span><br><span class="line">type(of: <span class="number">1</span>)             <span class="comment">// Int</span></span><br></pre></td></tr></table></figure>
+<h2><span id="is-타입-비교">is - 타입 비교</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anyArray: [<span class="type">Any</span>] = [<span class="number">1</span>, <span class="string">"2"</span>, <span class="number">3.0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> anyArray[<span class="number">0</span>] <span class="keyword">is</span> <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Int"</span>)  <span class="comment">// Int</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"else"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type(of: anyArray[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> anyArray[<span class="number">1</span>] <span class="keyword">is</span> <span class="type">String</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"String"</span>) <span class="comment">// String</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"else"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type(of: anyArray[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type(of:)를 써서 비교할 때는 .Type까지 명시해야 한다.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> type(of:anyArray[<span class="number">0</span>]) <span class="keyword">is</span> <span class="type">Int</span>.<span class="type">Type</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Equal"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//오류(Cast from 'Any.Type' to unrelated type 'Int' always fails)</span></span><br><span class="line"><span class="keyword">if</span> type(of:anyArray[<span class="number">0</span>]) <span class="keyword">is</span> <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Equal"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>상속 관계에서도 사용가능
+<ul>
+<li>인스턴스가 서브클래스 타입이라면 <code>true</code>를, 그렇지 않으면 <code>false</code>를 반환한다.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>: <span class="title">Human</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Baby</span>: <span class="title">Human</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> someone: <span class="type">Student</span> = <span class="type">Student</span>()</span><br><span class="line"><span class="built_in">print</span>(someone <span class="keyword">is</span> <span class="type">Human</span>)     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">print</span>(someone <span class="keyword">is</span> <span class="type">Student</span>)   <span class="comment">// true</span></span><br><span class="line"><span class="built_in">print</span>(someone <span class="keyword">is</span> <span class="type">Baby</span>)      <span class="comment">// false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1><span id="타입캐스팅type-casing">타입캐스팅(Type Casing)</span></h1>
+<ul>
+<li>as  : 타입 변환이 확실하게 가능한 경우(업캐스팅, 자기 자신 등) 에만 사용 가능. 그 외에는 컴파일 에러</li>
+<li>as? : 강제 타입 변환 시도. 변환이 성공하면 Optional 값을 가지며, 실패 시에는 nil 반환</li>
+<li>as! : 강제 타입 변환 시도. 성공 시 언래핑 된 값을 가지며, 실패 시 런타임 에러 발생</li>
+</ul>
+<blockquote>
+<p>캐스팅은 실질적으로 인스턴스를 수정하거나 값을 변경하는 작업이 아닙니다. 인스턴스는 메모리에선 똑같이 남아있을 뿐입니다. 다만 인스턴스를 사용할떄 어떤 타입으로 다루고 어떤 타입으로 접근할지 판단하도록 컴퓨터에서 알려주는 겁니다.</p>
+</blockquote>
+<h2><span id="다운캐스팅-downcasting">다운캐스팅 (Downcasting)</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> color = <span class="type">UIColor</span>.black</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">draw</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"draw shape"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>: <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cornerRadius = <span class="number">0.0</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">draw</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"draw rect"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Triangle</span>: <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">draw</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"draw triangle"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>: <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> radius = <span class="number">50.0</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">draw</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"draw circle"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>아래 소스를 보면 shape상수는 Shape인스턴스를 참조하도록 선어되어 있지만, 실질적으로는 Rectangle의 인스턴스를 참조 하고 있습니다.<br>
+이렇게 Rectangle 타입에 정의되어 있는 메서드를 사용하거나 프로퍼티에 접근해야 할 때 Rectangle타입으로 변수의 타입을 변환해주어야 하는데, 이를 스위프트에선 <strong>다운 캐스팅(Down Casting)</strong> 이라고 합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shape: <span class="type">Shape</span> = <span class="type">Rectangle</span>()</span><br><span class="line">type(of: shape) <span class="comment">// Rectangle.Type</span></span><br></pre></td></tr></table></figure>
+<p><strong>타입캐스트 연산자(Type Cast Operator)</strong> 는 as?, as! 두가지가 있습니다. 이 연산자를 사용하여 자식클래스 타입으로 다운 캐스팅할 수 있습니다.</p>
+<p>?와 !이 붙는 것을 보고 옵셔널이라고 생각이 들죠? 다운캐스팅은 실패 여지가 충분히 있기 때문에 ?가 붙은 연산자와 !가 붙은 연산자가 있습니다.<br>
+as?연산자를 이용해 다운캐스팅에 실패했을 경우 nil을 반환하고, 다운캐스팅을 강제 as!로 사용해서 실패할 경우는 런타임 오류가 발생 합니다. 따라서 as? 연산자는 반환타입이 옵셔널이며, as! 연산자의 반환 타입은 옵셔널이 아닙니다.</p>
+<ul>
+<li>다운캐스팅</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LivingBeing</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> age :<span class="type">Int</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(age:<span class="type">Int</span>?) &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> age = age &#123;</span><br><span class="line">            <span class="keyword">self</span>.age = age</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span>: <span class="title">LivingBeing</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name:<span class="type">String</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(name:<span class="type">String</span>?, age:<span class="type">Int</span>?) &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> name = name &#123;</span><br><span class="line">            <span class="keyword">self</span>.name = name</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(age: age ?? <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>: <span class="title">LivingBeing</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> isMammals:<span class="type">Bool</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">init</span>(isMammals:<span class="type">Bool</span>?, age:<span class="type">Int</span>?) &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> isMammals = isMammals &#123;</span><br><span class="line">            <span class="keyword">self</span>.isMammals = isMammals</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(age: age ?? <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> livingBeingArray = [<span class="type">Animal</span>(isMammals:<span class="literal">true</span>, age:<span class="number">12</span>),<span class="type">Human</span>(name:<span class="string">"Abhilash"</span>,age:<span class="number">25</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> animalObj = livingBeingArray[<span class="number">0</span>] <span class="keyword">as</span>! <span class="type">Animal</span> <span class="comment">//forced downcasting to Animal</span></span><br><span class="line"><span class="keyword">let</span> humanObj = livingBeingArray[<span class="number">1</span>] <span class="keyword">as</span>! <span class="type">Human</span> <span class="comment">//forced downcasting to Human</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> animalObj2 = livingBeingArray[<span class="number">0</span>] <span class="keyword">as</span>? <span class="type">Animal</span> <span class="comment">// success, returns Animal?</span></span><br><span class="line"><span class="keyword">let</span> humanObj2 = livingBeingArray[<span class="number">1</span>] <span class="keyword">as</span>? <span class="type">Human</span> <span class="comment">// success, returns Human?</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>타입캐스팅의 의미</strong> 는 실직적으로 인스턴스를 수정하거나 값을 변경하는 작업이 아닙니다. 인스턴스는 메모리에선 똑같이 남아 있을 뿐이고, 어떤 타입으로 다루고 어떤 타입으로 접근해야 할지 판단 할 수 있도록 컴퓨터에 힌트를 주는 것 입니다.</p>
+</blockquote>
+<h2><span id="any-anyobject">Any, AnyObject</span></h2>
+<blockquote>
+<p>Any(모든 타입), AnyObject(모든 레퍼런스 타입, 클래스 타입)<br>
+Any &gt; AnyObject</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/05/28/iOS/Hello Xcode/" data-toggle="tooltip" data-placement="top" title="[iOS] Hello Xcode">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/05/24/Swift/Initializer/" data-toggle="tooltip" data-placement="top" title="[Swift] 이니셜라이저(Initializer)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/05/25/Swift/타입체크(TypeCheck)/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/05/25/Swift/타입체크(TypeCheck)/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

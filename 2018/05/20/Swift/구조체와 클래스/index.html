@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [Swift] 구조체와 클래스 - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/05/20/Swift/구조체와 클래스/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Swift_logo_color.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                            
+                        </div>
+                        <h1>[Swift] 구조체와 클래스</h1>
+                        <h2 class="subheading">구조체와 클래스에 대해 알아 보곘습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-05-20
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="구조체와-클래스">구조체와 클래스</span></h1>
+<p>구조체와 클래스는 프로그래머가 데이터를 용도에 맞게 묶어 표현하고자 할 때 용이하고, 프로퍼티와 메소드를 사용하여 구조화된 데이터와 기능을 가질 수 있어 하나의 새로운 사용자정의 데이터 타입을 만들어 주는 것입니다.</p>
+<p>스위프트에선 구조체와 클래스의 모습과 문법이 거의 흡사 합니다. 하지만 구조체의 인스턴스는 <code>값 타입</code>이고, 클래스이 인스턴스는 <code>참조 타입</code>이라는 차이점이 있습니다.<br>
+또 중요한 점은 데이터 타입과 열거형은 모두 <code>값 타입</code>입니다.</p>
+<h2><span id="1-구조체">1. 구조체</span></h2>
+<p>먼저 구조체에 대해 알아 보겠습니다.</p>
+<h3><span id="11-구조체-정의">1.1 구조체 정의</span></h3>
+<p>구조체는 strcut 키워드로 정의 한다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> 구조체 이름 </span>&#123;</span><br><span class="line">  프로퍼티와 메서드</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="12-구조체-인스터스-생성-및-초기화">1.2 구조체 인스터스 생성 및 초기화</span></h3>
+<p>구조체의 인스턴스를 생성하고 초기화하고자 할 때에는 기본적으로 생성되는 <code>멤버와이즈 이니셜라이저</code>를 사용한다.</p>
+<p>인스턴스가 생성되고 초기화된 후 프로퍼티 값에 접근하고 싶다면 마침표(.)를 사용하면 됩니다.<br>
+구조체를 상수 let으로 선언하면 인스턴스 내부의 프로퍼티 값을 변경할 수 없고, 변수 var로 선언하면 내부의 프로퍼티가 var로 선언된 경우에 값을 변경해줄 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BasicInfo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> testInfo: <span class="type">BasicInfo</span> = <span class="type">BasicInfo</span>(name: <span class="string">"김승진"</span>, age: <span class="number">28</span>)</span><br><span class="line">testInfo.name = <span class="string">"Kim seungjin"</span> <span class="comment">// 변경 가능</span></span><br><span class="line">testInfo.age = <span class="number">35</span>           <span class="comment">// 변경 가능</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sjInfo: <span class="type">BasicInfo</span> = <span class="type">BasicInfo</span>(name: <span class="string">"sj"</span>, age: <span class="number">30</span>)</span><br><span class="line">sjInfo.name = <span class="string">"hahaha"</span>  <span class="comment">// 변경 불가!</span></span><br></pre></td></tr></table></figure>
+<h2><span id="2-클래스">2.  클래스</span></h2>
+<p>스위프트의 클래스는 부모의 상속 없이도 단독으로 정의가 가능합니다.</p>
+<h3><span id="21-클래스-정의">2.1 클래스  정의</span></h3>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 클래스 이름 : 부모클래스 이름</span>&#123;</span><br><span class="line">	프로퍼티와 메서드들</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>클래스를 정의 하는 방법은 구조체와 흡사하다. 하지만, 클래스는 상속을 받을 수 있기 때문에 상속받을 때에는 클래스 이름 뒤에 콜론(:)을 써주고 부모클래스 이름을 명시합니다.</p>
+<h3><span id="22-클래스-인스턴스의-생성과-초기화">2.2 클래스  인스턴스의 생성과 초기화</span></h3>
+<p>인스턴스가 생성되고 초기화된 후 프로퍼티 값에 접근하고싶다면 마침표(.)를 사용하면 된다.<br>
+구조체와는 다르게 클래스의 인스턴스는 참조 타입이므로 클래스의 인스턴스를 상수 let으로 선언해도 내부 프로퍼티 값을 변경할 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name : <span class="type">String</span> = <span class="string">""</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span> = <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ksj: <span class="type">Person</span> = <span class="type">Person</span>()</span><br><span class="line">ksj.name = <span class="string">"김승진"</span></span><br><span class="line">ksj.age = <span class="number">28</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> kkk: <span class="type">Person</span> = <span class="type">Person</span>()</span><br><span class="line">kkk.name = <span class="string">"가가가"</span></span><br><span class="line">kkk.age = <span class="number">40</span></span><br></pre></td></tr></table></figure>
+<h3><span id="23-클래스-인스턴스의-소멸">2.3  클래스 인스턴스의 소멸</span></h3>
+<p>클래스의 인스턴스는 참조 타입이므로 더는 참조할 필요가 없을 때 메모리에서 <code>해제</code>됩나다.<br>
+메모리에서 해제가 되기 직전에 <code>deinit</code>라는 메서드가 호출되고 클래스 내부에 deinit 메서드는 <code>디이니셜라이즈(Deinitializer)</code>라고 부릅니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name : <span class="type">String</span> = <span class="string">""</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span> = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">deinit</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(“<span class="type">Person</span> 클래스의 인스턴스가 소멸되었습니다.”)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ksj: <span class="type">Person</span>? = <span class="type">Person</span>()</span><br><span class="line">ksj = <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+<p>deinit 메서드는 인스턴스가 메모리에서 해제되기 직전에 처리할 코드를 넣어줍니다.<br>
+예를 들어 인스턴스 소멸전에 데이터를 저장한다거나 다른 객체에 인스턴스 소멸을 알려야 할때는 특히 deinit메서드를 구현해야 합니다.</p>
+<h2><span id="3-구조체와-클래스의-차이">3.  구조체와 클래스의 차이</span></h2>
+<p>구조체와 클래스의 공통점과 차이점을 알아보겠습니다.</p>
+<p><strong>공통점</strong></p>
+<ul>
+<li>프로퍼티를 정의할 수 있다.</li>
+<li>메서드를 정의 할 수 있다.</li>
+<li>초기화될 때의 상태를 지정하기 위해 이니셜라이저를 정의할 수 있다.</li>
+<li>익스텐션을 통해 확장할 수 있습니다.</li>
+<li>프로토콜을 준수할 수 있다.</li>
+</ul>
+<p><strong>차이점</strong></p>
+<ul>
+<li>구조체는 상속할 수 없다.</li>
+<li>타입캐스팅은 클래스의 인스턴스에만 허용된다.</li>
+<li>Reference Counting은 클래스의 인스턴스에만 적용된다.</li>
+</ul>
+<h3><span id="31-값-타입과-참조-타입">3.1  값 타입과 참조 타입</span></h3>
+<p>구조체는 값 타입이고 클래스는 참조 타입이라고 했습니다. 그렇다면 값 타입과 참조 타입의 가장 큰 차이 무엇일까요?<br>
+<code>무엇이 전달 되느냐</code>입니다. 예를 들어어떤 함수의 전달인자로 값 타입의 값을 넘긴다면 <code>전달될 값이 복사</code>되어 전달됩니다.<br>
+그러나 참조 타입이 전달될 인자로 전달될 때에는 값을 복사하지 않고 <code>참조(주소)가 전달 됩니다.</code> 여기서 주소라는것은 Point라는 개념과 유사합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PersonInfo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sjInfo: <span class="type">PersonInfo</span> = <span class="type">PersonInfo</span>(name: <span class="string">"김승진"</span>, age: <span class="number">28</span>)</span><br><span class="line">sjInfo.age = <span class="number">30</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//PersonInfo의 값을 복사하여 할당</span></span><br><span class="line"><span class="keyword">var</span> friendInfo: <span class="type">PersonInfo</span> = sjInfo</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"sjInfoAge : (sjInfo.age)"</span>)  <span class="comment">// 30</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"friendInfoAge : (friendInfo.age)"</span>)  <span class="comment">// 30</span></span><br><span class="line"></span><br><span class="line">friendInfo.age = <span class="number">90</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//sjInfo의 값을 복사해왔기 때문에 별개의 값을 가진다.</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"sjInfoAge : (sjInfo.age)"</span>)  <span class="comment">// 30</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"friendAge : (friendInfo.age)"</span>)  <span class="comment">// 90</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name : <span class="type">String</span> = <span class="string">""</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span> = <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> kim: <span class="type">Person</span> = <span class="type">Person</span>()</span><br><span class="line"><span class="keyword">var</span> friend: <span class="type">Person</span> = kim</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"kimAge : (kim.age)"</span>)  <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"friendAge : (friend.age)"</span>)  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">friend.age = <span class="number">28</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"kimAge : (kim.age)"</span>)  <span class="comment">// 28</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"friendAge : (friend.age)"</span>)  <span class="comment">// 28</span></span><br></pre></td></tr></table></figure>
+<p>값 타입의 데이터가 함수의 전달인자로 전달되면 메모리에 전달인자를 위한 인스턴스가 새로 생성되고, 생성된 새 인스턴스에는 전달하려는 값이 복사되어 들어갑니다.<br>
+반면 참조 타입의 데이터는 전달인자로 전달될 때, 기존 인스터스의 참조가 전달되므로 새로운 인스턴스가 아닌 기준의 인스턴스 주소가 전달 됩니다. 함수의 전달인자 뿐만 아니라 새로운 변수에 할당될 때 또한 마찬가지입니다.</p>
+<h3><span id="32-스위프트의-기본-데이터-타입은-모두-구조체">3.2 스위프트의 기본 데이터 타입은 모두 구조체</span></h3>
+<p>String타입의 정의를 살펴보겠습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">String</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">init</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>스위프트의 다른 기본타입(Int, Bool, Array, Dictionary, Set 등)도 String 타입과 마찬가지로 모두 구조체로 구현되어 있습니다.<br>
+즉, <code>기본 데이터 타입은 모두 값 타입이라는 뜻입니다.</code></p>
+<p>구조체와 클래스는 모두 새로운 떼이터 타입을 정의하고 기능을 추가한다는 점에서는 같습니다. 하지만 용도의 의미에서는 다릅니다.<br>
+그러면 어떤것을 선택해서 사용하는 것이 좋을까요?</p>
+<p>애플 가이드라인에서 다음 조건 중 하나 이상에 해당된다면 구조체를 사용하기를 권합니다.</p>
+<ol>
+<li>연관된 간단한 값의 집합을 캡슐화하는 것만이 목적일 때</li>
+<li>캡슐화된 값이 참조되는 것보다 복사되는것이 합당할 때</li>
+<li>다른 타입으로부터 상속받거나 자신이 상속될 필요가 없을 때</li>
+</ol>
+<p>그렇다면 스위프트의 기본 데이터 타입이 모두 구조체라서 다수의 배열 또는 딕셔너리 등의 데이터를 복사하고 이용할 때 메모리를 비효율적으로 사용한다고 오해할 수 있으실텐데 스위프트는 꼭 필요한 경우에만 <code>진짜 복사</code>를 합니다.<br>
+컴파일러가 판단하여 꼭 복사를 할 필요가 없을 경우, 요소를 많이 갖는 큰 배열을 함수의 전달인자로 넘겨준다고 해서 꼭 모든 값을 메모리의 다른 공간에 복사해 넣지 않을 수도 있다는 뜻입니다.  즉, 스위프트가 알아서 효율적으로 처리해줄 것입니다.</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/05/21/Swift/접근제어/" data-toggle="tooltip" data-placement="top" title="[Swift] 접근제어(Access Control)">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/05/19/Swift/열거형/" data-toggle="tooltip" data-placement="top" title="[Swift] 열거형(Enumeration)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/05/20/Swift/구조체와 클래스/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/05/20/Swift/구조체와 클래스/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

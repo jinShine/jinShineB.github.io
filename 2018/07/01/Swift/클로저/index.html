@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [Swift] 클로저(Closure) - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/07/01/Swift/클로저/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Swift_logo_color.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                            
+                        </div>
+                        <h1>[Swift] 클로저(Closure)</h1>
+                        <h2 class="subheading">클로저(Closure)에 대해 파헤쳐 보겠습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-07-01
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="클로저closure">클로저(Closure)</span></h1>
+<hr>
+<p>스위프트에서 함수형 프로그래밍을 접할 때 꼭 잘 알아야할 부분이 클로저 입니다. C언어나 Objective-C의 블록(block) 또는 다른 프로그래밍언어의 람다(Lambda)와 유사합니다.</p>
+<blockquote>
+<p>사실 함수는 클로저의 한 형태다!</p>
+</blockquote>
+<p>일반 메서드들은 이름을 가지는 클로저의 한 형태이고, 흔히 클로저는 이름을 가지지 않는 <code>익명 함수</code>를 말합니다.</p>
+<p>클로저는 <strong><code>1급 객체</code></strong> 입니다.</p>
+<blockquote>
+<p>1급 객체 (First-class citizen)</p>
+<ul>
+<li>변수나 데이터에 할당할 수 있어야 한다.</li>
+<li>객체의 인자로 넘길 수 있어야 한다.</li>
+<li>객체의 리턴값으로 리턴할 수 있어야 한다.</li>
+</ul>
+</blockquote>
+<h2><span id="클로저-표현식">클로저 표현식</span></h2>
+<p>먼저 함수의 표현식을 살펴 보겠습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> 함수 이름 <span class="params">(parameters)</span></span> -&gt; <span class="type">ReturnType</span> &#123;</span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>함수는 <code>func</code>,<code>함수 이름</code>,<code>parameters</code>,<code>ReturnType</code>,<code>()</code>,<code>{}</code>,<code>-&gt;</code> 이런 조합들로 이루어져 있습니다.</p>
+<p>클로저는 일반 함수와 달리 func 키워드 대신 <code>in</code>키워드를 사용하고, <code>함수 이름</code>이 없는 차이가 있습니다.</p>
+<p>클로저 표현식으로 한번 살펴 보겠습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; (parameters) -&gt; <span class="type">ReturnType</span> <span class="keyword">in</span></span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위의 표현식처럼 클로저는 <code>{ }</code>로 시작하며, <code>parameters</code>,<code>ReturnType</code>은 함수와 동일하며 <code>in</code>키워드는 실행할 코드와 구분하는 역할을 합니다.<br>
+함수에선 <code>{ }</code>에 실행할 코드를 넣어주어 구분이 필요 없었지만 클로저는 <code>모든 요소가 { }사이에 존재</code>하기 때문에 in과 같은 키워드가 필요 합니다.</p>
+<p>파라미터 생략이 가능합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; () -&gt; <span class="type">ReturnType</span> <span class="keyword">in</span></span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>리턴 생략이 가능합니다.<br>
+리턴을 생각할땐 화살표도 모두 없애줍니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; () <span class="keyword">in</span></span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>파라미터와 리턴이 모두 없다면 모두 생략하고 <code>{ }</code>와 코드만 사용할 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; code &#125;</span><br></pre></td></tr></table></figure>
+<p>Hello,승진 print하는 클로저 표현법</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 파라미터와 리턴형이 없기 때문에 자료형은 () -&gt; ()</span></span><br><span class="line">&#123; <span class="built_in">print</span>(<span class="string">"Hello, 승진"</span>) &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 상수 C에는 값이 저장되는게 아니라 실행될 코드가 저장된다.</span></span><br><span class="line"><span class="comment">// c()</span></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">c</span> = &#123; <span class="built_in">print</span>(<span class="string">"Hello, 승진"</span>) &#125;</span><br><span class="line"><span class="built_in">c</span>() <span class="comment">// 호출</span></span><br><span class="line"></span><br><span class="line"><span class="comment">////////////////////////</span></span><br><span class="line"><span class="comment">//파라미터와 리턴형이 있는 형태</span></span><br><span class="line"><span class="comment">////////////////////////</span></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">c</span> = &#123; (str: <span class="type">String</span>) -&gt; <span class="type">String</span> <span class="keyword">in</span> </span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, \(str)"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = <span class="built_in">c</span>(<span class="string">"승진"</span>)</span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">// Hello, 승진</span></span><br><span class="line"></span><br><span class="line"><span class="comment">////////////////////////</span></span><br><span class="line"><span class="comment">//클로저를 파라미터로 전달</span></span><br><span class="line"><span class="comment">////////////////////////</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//문자열을 파라미터로 받아 문자열을 리턴하는 함수</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(<span class="number">_</span> <span class="built_in">c</span>: <span class="params">(String)</span></span></span> -&gt; <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> r = <span class="built_in">c</span>(<span class="string">"승진"</span>) <span class="comment">// 클로저를 실행</span></span><br><span class="line">    <span class="built_in">print</span>(r)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">c</span> = &#123; (str: (<span class="type">String</span>) -&gt; <span class="type">String</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, \(str)"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//perform 함수의 파라미터 자료형과 c의 자료형이 동일해서</span></span><br><span class="line"><span class="comment">//파라미터로 전달 할 수 있습니다.</span></span><br><span class="line">perfom(<span class="built_in">c</span>)</span><br></pre></td></tr></table></figure>
+<h2><span id="syntax-optimizations">Syntax Optimizations</span></h2>
+<hr>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(<span class="number">_</span> <span class="built_in">c</span>: <span class="params">(String)</span></span></span> -&gt; <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> r = <span class="built_in">c</span>(<span class="string">"승진"</span>) <span class="comment">// 클로저를 실행</span></span><br><span class="line">    <span class="built_in">print</span>(r)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">c</span> = &#123; (str: (<span class="type">String</span>) -&gt; <span class="type">String</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, \(str)"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위에 코드들을 실행과 동시에 c의 파라미터를 넣은 형태<br>
+인라인 클로저 형태</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perform(&#123; (str: <span class="type">String</span>) -&gt; <span class="type">String</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, \(str)"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>c파라미터를 통해 파라미터 유추 가능.<br>
+파라미터 이름을 제외한 나머지 요소를 삭제 가능</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perform(&#123; str <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello, \(str)"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>리턴값 생략 가능</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perform(&#123;str <span class="keyword">in</span></span><br><span class="line">    <span class="string">"Hello,\(str)"</span> <span class="comment">//Implicit Return, 단일 표현식에서만 Return을 제거 할 수 있음.</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>파라미터의 갯수를 유추할 수 있다면 <code>Shorthand Argument Name</code>($와 숫자로 표현된 형태)으로 대체 가능<br>
+<code>Shorthand Argument Name</code>를 사용할 경우 <code>파라미터 이름</code>과 <code>in</code>을 모두 생략 가능 합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perform(&#123;</span><br><span class="line">    <span class="string">"Hello,\($0)"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>이로써 클로저 문법을 최대로 간소화 되서 표현을 사용할 수 있습니다.<br>
+위와 같은 문법은 <code>인라인클로저</code>형태이며 <code>후행클로저</code>로 표현해서 사용할 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perform &#123; <span class="string">"Hello, \($0)"</span> &#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="후행-클로저trailing-closure">후행 클로저(Trailing Closure)</span></h2>
+<hr>
+<p>클로저가 조금 길어지거나 가독성이 조금 떨어진다 싶으면 <code>후행 클로저</code>사용하면 좋습니다.</p>
+<blockquote>
+<p>단, 후행 클로저는 맨 마지막 전달인자로 전달되는 클로저에만 해당되므로 전달인자로 클로저가 여러 개 전달될 때에는 맨 마지막 클로저만 후행 클로저로 사용할 수 있습니다.</p>
+</blockquote>
+<p><code>code</code>라는 argument name을 선언해보았습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(code <span class="built_in">c</span>: <span class="params">(String)</span></span></span> -&gt; <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> r = <span class="built_in">c</span>(<span class="string">"Swift"</span>)</span><br><span class="line">    <span class="built_in">print</span>(r)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">perform(code: &#123; <span class="string">"Hello, \($0)"</span> &#125;)</span><br></pre></td></tr></table></figure>
+<p>argument로 전달할 코드가 ()뒤로 이동합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perform() &#123; <span class="string">"Hello, \($0)"</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>괄호에 포함될 argument이름은 생략된다.<br>
+만약 다른 파라미터가 있다면 ()를 생략 불가능합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perform &#123; <span class="string">"Hello, \($0)"</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>후행클로저는 맨 마지막 전달인자로 전달되는 클로저에만 해당된다고 했습니다.<br>
+파라미터가 여러개일때를 확인해 보겠습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//2개의 정수 파라미터를 받고, 정수를 반환하는 클로저</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(a: Int, b: Int, <span class="built_in">c</span>: <span class="params">(Int, Int)</span></span></span> -&gt; <span class="type">Int</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">c</span>(a, b)</span><br><span class="line">    <span class="built_in">print</span>(result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 후행 클로저</span></span><br><span class="line">perform(a: <span class="number">10</span>, b: <span class="number">20</span>) &#123; (a, b) -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//인라인 클로저로 바꿔보기</span></span><br><span class="line"><span class="comment">//()안에 넣어주기만 하면 된다!</span></span><br><span class="line">perform(a: <span class="number">10</span>, b: <span class="number">20</span>, <span class="built_in">c</span>: &#123; (a,b) -&gt; <span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//후행클로저 문법 최적화</span></span><br><span class="line">perform(a: <span class="number">10</span>, b: <span class="number">20</span>) &#123; $<span class="number">0</span> + $<span class="number">1</span> &#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="값-획득-capturing-values">값 획득 (Capturing Values)</span></h2>
+<hr>
+<p>클로저는 자신이 정의된 위치에 주변의 상수나 변수를 <code>획득(Capturing)</code>할 수 있습니다.<br>
+Capturing을 통해 클로저는 주변에 정의된 상수나 변수가 더는 존재하지 않더라도 그 상수나 변수의 값을 자신 내부에서 참조하거나 수정할 수 있습니다.</p>
+<p>클로저는 <code>비동기 작업</code>에 많이 사용되는데 비동기 콜백의 형태를 작성하는 경우, 현재 상태를 미리 획득해 두지 않으면, 실질적으로 클로저의 기능을 수행하는 순간에는 주변의 상수나 변수가 이미 메모리에 존재하지 않는 경우가 발생할 수가 있기 때문입니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 클로저는 클로저의 포함된 코드의 내부가 완료될때까지 num변수를 메모리를 유지합니다.</span></span><br><span class="line"><span class="comment">// 이런 동작을 Capturing Value 즉, 값을 획득, 값을 캡처 한다고 합니다.</span></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">c</span> = &#123; <span class="built_in">print</span>(<span class="string">"value : \(num)"</span>) &#125;</span><br></pre></td></tr></table></figure>
+<p>값을 획득 하는 방식은 크게 <code>2가지</code>가 있습니다.</p>
+<ol>
+<li>값이 획득될때 클로저 내부에 값이 복사가 되어 전달 되는 방식</li>
+<li>주소값을 참조 하는 방식</li>
+</ol>
+<h3><span id="1value-type-capture">1.Value Type Capture</span></h3>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">c</span> = <span class="number">10</span></span><br><span class="line"><span class="keyword">var</span> result = <span class="number">0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"초기화 값 :"</span>, a, b, <span class="built_in">c</span>, result) <span class="comment">// 초기화 값 : 1 2 10 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"a, b 만 캡쳐"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> valueCapture = &#123; [a, b] <span class="keyword">in</span> <span class="comment">// [ 캡처할 값을 지정 ]</span></span><br><span class="line">  result = a + b + <span class="built_in">c</span> <span class="comment">// 8</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"클로저 내부 값 :"</span>, a, b, <span class="built_in">c</span>, result) <span class="comment">// 클로저 내부 값 : 1 2 5 8</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a = <span class="number">10</span></span><br><span class="line">b = <span class="number">10</span></span><br><span class="line"><span class="built_in">c</span> = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">result = a + b + <span class="built_in">c</span> <span class="comment">// 25</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"변경 값 :"</span>, a, b, <span class="built_in">c</span>, result) <span class="comment">// 10 10 5 25</span></span><br><span class="line"></span><br><span class="line">valueCapture() <span class="comment">// 클로저 실행!</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"실행 이후 값 :"</span>, a, b, <span class="built_in">c</span>, result) <span class="number">10</span> <span class="number">10</span> <span class="number">5</span> <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<h3><span id="2reference-type-capture">2.Reference Type Capture</span></h3>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">RefType</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> number = <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = <span class="type">RefType</span>() <span class="comment">// x변수에 RefType 객체 생성</span></span><br><span class="line"><span class="keyword">var</span> y = <span class="type">RefType</span>() <span class="comment">// y변수에 RefType 객체 생성</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"초기화 값 :"</span>, x.number, y.number) <span class="comment">// 초기화 값 : 0 0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> refCapture = &#123; [x] <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"클로저 내부 값 :"</span>, x.number, y.number) <span class="comment">// ()</span></span><br><span class="line">&#125;</span><br><span class="line">x.number = <span class="number">5</span></span><br><span class="line">y.number = <span class="number">7</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"변경 값 :"</span>, x.number, y.number) <span class="comment">// 변경 값 : 5 7</span></span><br><span class="line"></span><br><span class="line">refCapture()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"실행 이후 값 :"</span>, x.number, y.number) <span class="comment">// 실행 이후 값 : 5 7</span></span><br></pre></td></tr></table></figure>
+<h2><span id="탈출-클로저">탈출 클로저</span></h2>
+<hr>
+<p>함수의 파라미터로 전달된 클로저가 함수 종료 후에 호출될 때 클로저가 함수를 <code>탈출(Escape)</code>한다고 표현합니다.<br>
+클로저가 매개변수로 갖는 함수를 선언할 때 매개변수 이름의 <code>콜론(:)</code> 뒤에 <code>@escaping</code>키워드를 사용하여 클로저가 탈출하는 것을 허용한다고 명시해줄 수 있습니다.</p>
+<p><code>@escaping</code>을 따로 명시하지 않는다면 매개변수로 사용되는 클로저는 기본적으로 <code>비탈출(Nonescape)</code>클로저 입니다.</p>
+<p>탈출클로저는 함수가 종료되고 난 후 작업이 끝나고 호출될 필요가 있는 클로저를 사용해야 할 때 필요.<br>
+비탈출클로저는 함수의 동작이 끝난 후 전달된 클로저가 필요 없을때 사용합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//클로저를 파라미터로 받는 perfom 함수</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(closure: <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"1"</span>)</span><br><span class="line">    closure()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"2"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">perform &#123; <span class="built_in">print</span>(<span class="string">"closure"</span>) &#125;</span><br><span class="line"><span class="comment">//1</span></span><br><span class="line"><span class="comment">//closure</span></span><br><span class="line"><span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p>결과적으로 1 -&gt; closure -&gt; 2가 실행되는걸 볼 수 있습니다.<br>
+위의 코드는 <code>비탈출</code>코드입니다.<br>
+위는 코드는 아니지만 <code>탈출</code>이라는것은 클로저의 실행주기가 함수의 실행주기는 벗어난다는 것입니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(closure: <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"1"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//GCD를 통해서 비동기적으로 호출</span></span><br><span class="line">    <span class="comment">//비동기적으로 호출하기 때문에 perfom함수의 실행주기를 벗어나게됨.</span></span><br><span class="line">    <span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">        <span class="comment">// closure()호출은 perform함수가 끝나고 난뒤에 호출될수가 있다.</span></span><br><span class="line">        <span class="comment">// 그런데도 closure의 파라미터는 여전히 noescaping으로 설정되어있으므로</span></span><br><span class="line">        <span class="comment">// 오류가 발생합니다.</span></span><br><span class="line">        closure()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"2"</span>)</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//@escaping 추가</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">perform</span><span class="params">(closure: @escaping <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"1"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//GCD를 통해서 비동기적으로 호출</span></span><br><span class="line">    <span class="comment">//비동기적으로 호출하기 때문에 perfom함수의 실행주기를 벗어나게됨.</span></span><br><span class="line">    <span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">        <span class="comment">// closure()호출은 perform함수가 끝나고 난뒤에 호출될수가 있다.</span></span><br><span class="line">        <span class="comment">// 그런데도 closure의 파라미터는 여전히 noescaping으로 설정되어있으므로</span></span><br><span class="line">        <span class="comment">// 오류가 발생합니다.</span></span><br><span class="line">        closure()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"2"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">perform &#123; <span class="built_in">print</span>(<span class="string">"closure"</span>) &#125;</span><br><span class="line"><span class="comment">//GCD의 상태에 따라 달라질 수 있기때문에 closure의 출력위치가 달라질 수 있다.</span></span><br><span class="line"><span class="comment">// 1            // 1</span></span><br><span class="line"><span class="comment">// closure      // 2</span></span><br><span class="line"><span class="comment">// 2            // closure</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------//</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">performNonescaping</span><span class="params">(closure: <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    closure()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">performEscaping</span><span class="params">(closure: @escaping <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    <span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">        closure()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AccessSample</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">123</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">printValue</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">//NoEscaping</span></span><br><span class="line">        <span class="comment">//함수의 실행주기에 호함되므로 self를 쓰지않고 프로퍼티에 접근 가능</span></span><br><span class="line">        performNonescaping &#123;</span><br><span class="line">            <span class="built_in">print</span>(value)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Escaping</span></span><br><span class="line">        <span class="comment">//클로저의 실행이 완료될때까지 인스턴스가 유지되도록 self를 명시적으로 capturing해야됩니다.</span></span><br><span class="line">        perfomEscaping &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="keyword">self</span>.value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">internal</span> <span class="class"><span class="keyword">class</span> <span class="title">Callee</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">doSomething</span><span class="params">(closure: <span class="params">()</span></span></span> -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    closure()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Callee was initialized"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">deinit</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Callee was deinitialized"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Caller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> callee = <span class="type">Callee</span>()</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">"James"</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">doSomething</span><span class="params">()</span></span> &#123;</span><br><span class="line">    callee.doSomething &#123;</span><br><span class="line">      name = <span class="string">"Tom"</span> <span class="comment">// noescaping일때는 내부에서도 self를 적지 않아도 사용이된다.</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> closure: (() -&gt; ()) = &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">noEscapingClosure</span><span class="params">(<span class="number">_</span> arg: <span class="params">()</span></span></span>-&gt;()) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 외부에 있는 closure를 접근 하고 있어서 오류가 난다.</span></span><br><span class="line">    <span class="comment">// 외부에 있는 메모리 자체를 self.closure라는 내부 자체에 접근해야되기때문에 오류가 난다.</span></span><br><span class="line">    <span class="comment">//self.closure = arg  // required @escaping</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// NoEscaping -&gt; NoEscaping // arg를 someFunc에 전달하고있다.</span></span><br><span class="line">    <span class="comment">//someFunc(arg)    </span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// NoEscaping -&gt; Escaping 불가능</span></span><br><span class="line">    <span class="comment">// 그래서 arg: @escaping를 써줘야된다.</span></span><br><span class="line">    <span class="comment">//someEscapingFunc(arg)</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">someFunc</span><span class="params">(<span class="number">_</span> arg: <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    arg()</span><br><span class="line">    <span class="comment">//self.closure = arg    // required @escaping</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">func</span> <span class="title">someEscapingFunc</span><span class="params">(<span class="number">_</span> arg: @escaping <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">    arg()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="자동클로저autoclosure">자동클로저(AUtoClosure)</span></h2>
+<hr>
+<p>함수의 전달인자로 전달되는 표현을 자동으로 변환해주는 클로저를 <code>자동클로저(Auto Closure)</code>라고 합니다.<br>
+자동 클로저는 전달인자를 갖지 않습니다. 호출되었을때 자신이 감싸고 있는 코드의 결과값을 반환하고<br>
+함수로 전달되는 클로저를 어려운 클로저 문법을 사용하지 않고도 클로저로 사용할 수 있도록 문법적 편의를 제공합니다.<br>
+<code>@autoclosure</code>키워드를 사용합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">autoclosure</span><span class="params">(<span class="number">_</span> arg1: String, <span class="number">_</span> arg2: @autoclosure <span class="params">()</span></span></span> -&gt; ()) &#123;</span><br><span class="line">  <span class="built_in">print</span>(arg1)</span><br><span class="line">  arg2()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// closure 파라미터에 대입할 내용을 일반 함수 파라미터처럼 입력</span></span><br><span class="line">autoclosure(<span class="string">"arg1"</span>, <span class="built_in">print</span>(<span class="string">"Autoclosure"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">//아래와 같이 사용하려면 @autoclosure를 사용했을때는 파라미터 안에 쓸 수 있다.</span></span><br><span class="line">autoclosure(<span class="string">"arg1"</span>, value2 += <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Autoclosure 파라미터에 일반 클로저 형태는 사용이 불가합니다.</span></span><br><span class="line">autoclosure(<span class="string">"arg1"</span>) &#123; <span class="comment">// Compile Error</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"Do Something"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/07/02/iOS/App Sandbox/" data-toggle="tooltip" data-placement="top" title="[iOS] 앱 샌드박스(App Sandbox)와 Container Directory">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/06/07/iOS/Delegate/" data-toggle="tooltip" data-placement="top" title="[iOS] 델리게이트(Delegate)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/07/01/Swift/클로저/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/07/01/Swift/클로저/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

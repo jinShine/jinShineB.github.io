@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [iOS] UIImagePickerController - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/07/06/iOS/UIImagePickerController/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/iOS-bg.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                            
+                        </div>
+                        <h1>[iOS] UIImagePickerController</h1>
+                        <h2 class="subheading">UIImagePickerController를 통해 사진,동영상 촬영/저장에 대해 알아보겠습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-07-06
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="uiimagepickercontroller">UIImagePickerController?</span></h1>
+<hr>
+<p>사진, 동영상 촬영, 저장에 관해 포스트 해보도록 하겠습니다.<br>
+먼저 간단하게 <code>앨범</code>,<code>카메라</code>,<code>딜레이촬영</code>,<code>동영상</code>,<code>Editing변경</code>버튼을 만들어 간단한 기능 소개를 해보겠습니다.<br>
+<img src="https://i.imgur.com/arLaOI5.png?1" alt="Imgur"></p>
+<h2><span id="uiimagepickercontroller-객체-생성">UIImagePickerController 객체 생성</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">let</span> imagePickerController = <span class="type">UIImagePickerController</span>()</span><br></pre></td></tr></table></figure>
+<h2><span id="앨범-접근">앨범 접근</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">pickImage</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\n---------- [ pickImage ] ----------\n"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//간단히 present만으로 imagePickerController를 띄울수 있다.</span></span><br><span class="line">    <span class="comment">//present(imagePickerController, animated: true, completion: nil)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    public enum UIImagePickerControllerSourceType : Int &#123;</span></span><br><span class="line"><span class="comment">        case photoLibrary // 사진 앨범들</span></span><br><span class="line"><span class="comment">        case camera // 카메라를 띄우는 타입</span></span><br><span class="line"><span class="comment">        case savedPhotosAlbum // 특별한 순간</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> type = <span class="type">UIImagePickerControllerSourceType</span>.photoLibrary</span><br><span class="line">    <span class="keyword">guard</span> <span class="type">UIImagePickerController</span>.isSourceTypeAvailable(type) <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125; <span class="comment">// 현재 기기에서 가능한지 확인하는 부분</span></span><br><span class="line">    </span><br><span class="line">    imagePickerController.sourceType = type</span><br><span class="line">    present(imagePickerController, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>간단하게 <code>present</code>만으로 imamgePickerController를 띄울 수 있습니다. <code>UIImagePickerControllerSourceType</code>에는 3가지의 타입이 있습니다. 해당 타입에 맞게 <code>imagePickerController.sourceType = type</code>을 넣어주어 3가지의 ViewController present를 할 수 있습니다.</p>
+<ul>
+<li>photoLibrary 타입<br>
+<img src="https://i.imgur.com/aW6N999.png?1" alt="Imgur"></li>
+</ul>
+<h2><span id="카메라-접근">카메라 접근</span></h2>
+<p>카메라의 촬영화면을 띄우기 위해선 <code>sourceType</code>을 <code>camera</code>로 설정하고 present를 하면 쉽게 촬영할 수 있다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">takePicture</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\n---------- [ takePicture ] ----------\n"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//카메라 사용가능한지 체크</span></span><br><span class="line">    <span class="keyword">guard</span> <span class="type">UIImagePickerController</span>.isSourceTypeAvailable(.camera) <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    imagePickerController.sourceType = .camera</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//imagePickerController.allowsEditing = true // 촬영 후 편집할 수 있는 부분이 나온다.</span></span><br><span class="line">    </span><br><span class="line">    present(imagePickerController, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>하지만! 이 상태로 바로 실행을 하게 되면 에러가 납니다!</p>
+<blockquote>
+<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+</blockquote>
+<ul>
+<li>해결방법<br>
+plist에서 <code>Privacy - Camera Usage Description</code>를 넣어 주어야 된다.</li>
+</ul>
+<p><code>allowsEditing</code>은 촬영후 편집 화면을 말합니다.<br>
+<img src="https://i.imgur.com/J0fZJLx.jpg?1" alt="Imgur"><br>
+네모난 라인? 보이시나요</p>
+<h2><span id="딜레이-촬영">딜레이 촬영</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">takePictureWithDelay</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\n---------- [ takePictureWithDelay ] ----------\n"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//카메라 사용가능한지 체크</span></span><br><span class="line">    <span class="keyword">guard</span> <span class="type">UIImagePickerController</span>.isSourceTypeAvailable(.camera) <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    imagePickerController.sourceType = .camera</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 클로저를 이용해서 3초 뒤에 나오게 처리</span></span><br><span class="line">    <span class="comment">// 클로저 안에 클로저를 쓸때 self를 쓰게되면 강한 참조가 발생한다.</span></span><br><span class="line">    <span class="comment">// 그래서 이럴때는 weak self 캡처링을 이용해서 약한참조로 만들어준다.</span></span><br><span class="line">    present(imagePickerController, animated: <span class="literal">true</span>) &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] <span class="keyword">in</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 클로저를 이용한 방법</span></span><br><span class="line">        <span class="comment">// 화면이 올라오자마자 바로 찍히게됨.</span></span><br><span class="line">        <span class="comment">// self.imagePickerController.takePicture()</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//3초 뒤에 찍히게.</span></span><br><span class="line">        <span class="type">DispatchQueue</span>.main.asyncAfter(deadline: .now() + <span class="number">3</span>, execute: &#123;</span><br><span class="line">            <span class="keyword">self</span>?.imagePickerController.takePicture() <span class="comment">// 여기서는 강한 참조가 발생해서 weak self를 캡처링</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>present의 파마리터에는 completion의 클로저가 있습니다. 비동기 형식이여 카메라의 화면이 보이고 난 후(completion) 동작되는 부분입니다.<br>
+딜레이가 3초가 있다고 생각하고 자동으로 촬영하고 싶다면(딜레이의 방법은 여러가지가 있지만), DispatchQueue를 통해 3초 늘리는 방식을 사용.<br>
+<code>takePickture()</code>메서드는 촬영하는 기능입니다.</p>
+<h2><span id="동영상-촬영">동영상 촬영</span></h2>
+<ul>
+<li><strong>1번</strong>, <strong>2번</strong>주석이 되있는부분은 설명이 필요한 부분입니다.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">recordingVideo</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\n---------- [ recordingVideo ] ----------\n"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">guard</span> <span class="type">UIImagePickerController</span>.isSourceTypeAvailable(.camera) <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    imagePickerController.sourceType = .camera</span><br><span class="line"></span><br><span class="line">    <span class="comment">//1번!!!!!!!</span></span><br><span class="line">    imagePickerController.cameraCaptureMode = .video</span><br><span class="line"></span><br><span class="line">    present(imagePickerController, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>cameraCaptureMode</code>에는 .video, .photo 2가지가 존재하는데 defaults로는 .photo 입니다.<br>
+.video를 사용하면 동영상촬영모드가 됩니다.</p>
+<p>하지만 에러가 납니다!</p>
+<blockquote>
+<p>reason: ‘cameraCaptureMode 1 not available because mediaTypes does contain public.movie’</p>
+</blockquote>
+<ul>
+<li><strong>1번</strong><br>
+video는 <code>public.movie</code>가 포함되있어야되는데 포함해주지 않아서 그렇습니다.<br>
+public.moview같이 public.image, public.item의 자세한 내용은 <a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html#//apple_ref/doc/uid/TP40001319-CH202-SW3" target="_blank" rel="noopener">Apple Documentation UTIs</a>를 참조 하시기 바랍니다.</li>
+</ul>
+<p>print를 한번 찍어보겠습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//현재 imagePickerController의 mediaTypes</span></span><br><span class="line"><span class="built_in">print</span>(imagePickerController.mediaTypes) <span class="comment">// public.image</span></span><br><span class="line"><span class="comment">//사용가능한 imagePickerController의 mediaTypes</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">UIImagePickerController</span>.availableMediaTypes(<span class="keyword">for</span>: .camera) ?? []) <span class="comment">// ["public.image", "public.movie"]</span></span><br></pre></td></tr></table></figure>
+<p>사용가능한 imagePickerController의 mediaTypes은 [“public.image”, “public.movie”]입니다.</p>
+<p><strong>즉, 동영상 촬영을 할때는 meteaTypes에 public.movies를 넣어주면 됩니다.</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">recordingVideo</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\n---------- [ recordingVideo ] ----------\n"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">guard</span> <span class="type">UIImagePickerController</span>.isSourceTypeAvailable(.camera) <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    imagePickerController.sourceType = .camera</span><br><span class="line"></span><br><span class="line">    imagePickerController.mediaTypes = [<span class="string">"public.movie"</span>] <span class="comment">// 추가</span></span><br><span class="line">    imagePickerController.cameraCaptureMode = .video</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 카메라 정면, 후면 설정</span></span><br><span class="line">    imagePickerController.cameraDevice = .rear <span class="comment">// 후면     .rear, .front</span></span><br><span class="line">    <span class="comment">// 플래쉬 작동 모드</span></span><br><span class="line">    imagePickerController.cameraFlashMode = .on <span class="comment">// FlashMode  .on, .off, .auto</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    present(imagePickerController, animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>되나요? 하지만, 이번엔 다른 에러가 날껍니다!</p>
+<blockquote>
+<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSMicrophoneUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+</blockquote>
+<p>왜냐하면, 동영상 촬영은 소리도 같이 들어가죠? 그래서 마이크를 쓰기위해 접근해줘야됩니다.</p>
+<ul>
+<li>해결방법<br>
+plist에 Privacy - Microphone Usage Description를 추가해주어야된다.</li>
+</ul>
+<h2><span id="editing변경">Editing변경</span></h2>
+<p>위에서 설명했지만 찍힌 사진을 편집 할 수 있는 화면을 나타나게 한겁니다.</p>
+<p>간단하게 토글의 기능으로 Editing을 누르면 편집창이 나타나고, 다시 누르면 정상적인 이미지만 나옵니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">toggleAllowsEditing</span><span class="params">(<span class="number">_</span> sender: Any)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"\n---------- [ toggleAllowsEditing ] ----------\n"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 누를때 마다 반대가 되게</span></span><br><span class="line">    imagePickerController.allowsEditing = !imagePickerController.allowsEditing</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<br>
+기능은 다 설명했지만 맨 위에 보이는 이미지뷰는 무엇이고, 사진,동영상 저장하는 방법에 대해 알아 보겠습니다!
+위에서 했던 기능들은 촬영을 해도 저장이 되지 않았을껍니다. 앨범에 들어가서 사진을 눌러도 그냥 종료됬을겁니다.
+<p>앨범에서 사진들의 정보를 가져오거나 촬영후 저장하기 위해서는 Delegate를 구성해야야합니다.<br>
+하지만 <code>UIImagePickerControllerDelegate만 구성할 수 없습니다.</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 같이 연결 되어있기 때문에 UIImagePickerControllerDelegate, UINavigationControllerDelegate같이 채택해야된다.</span></span><br><span class="line"> <span class="keyword">weak</span> <span class="keyword">open</span> <span class="keyword">var</span> delegate: (<span class="type">UIImagePickerControllerDelegate</span> &amp; <span class="type">UINavigationControllerDelegate</span>)?</span><br></pre></td></tr></table></figure>
+<h2><span id="delegate-구현">Delegate 구현</span></h2>
+<p>UIImagePickerControllerDelegate는 2가지가 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//picking을 했을때</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">imagePickerController</span><span class="params">(<span class="number">_</span> picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])</span></span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//취소 했을때</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">imagePickerControllerDidCancel</span><span class="params">(<span class="number">_</span> picker: UIImagePickerController)</span></span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>imagePickerController 구현</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">imagePickerController</span><span class="params">(<span class="number">_</span> picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]</span></span></span><br><span class="line"><span class="function"><span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    //info에 정보들이 들어있다! Dictionary타입</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">print</span><span class="params">(<span class="string">"didFinishPickingMediaWithInfo,"</span>, info)</span></span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mediaType = info[<span class="type">UIImagePickerControllerMediaType</span>] <span class="keyword">as</span>! <span class="type">NSString</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1번!!!!!!!!!</span></span><br><span class="line">    <span class="keyword">if</span> <span class="type">UTTypeEqual</span>(mediaType, kUTTypeMovie) &#123;</span><br><span class="line">        <span class="comment">// 동영상 촬영 정보가 넘어 옴</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> urlPath = info[<span class="type">UIImagePickerControllerMediaURL</span>] <span class="keyword">as</span>! <span class="type">NSURL</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> path = urlPath.path &#123;</span><br><span class="line">            <span class="comment">// video를 저장하는 메서드</span></span><br><span class="line">            <span class="type">UISaveVideoAtPathToSavedPhotosAlbum</span>(path, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 사진 촬영, 이미지 정보가 넘어옴</span></span><br><span class="line">        <span class="keyword">let</span> originalImage = info[<span class="type">UIImagePickerControllerOriginalImage</span>] <span class="keyword">as</span>! <span class="type">UIImage</span> <span class="comment">// as? UIImage를 해도된다.</span></span><br><span class="line">            <span class="keyword">let</span> editedImage = info[<span class="type">UIImagePickerControllerEditedImage</span>] <span class="keyword">as</span>? <span class="type">UIImage</span></span><br><span class="line">            <span class="keyword">let</span> selectedImage = editedImage ?? originalImage <span class="comment">// editedImage가 nil이면 originalImage를 넣으라는 뜻</span></span><br><span class="line">            imageView.image = selectedImage</span><br><span class="line"></span><br><span class="line">            <span class="comment">//2번!!!!!!!!!!!</span></span><br><span class="line">            <span class="type">UIImageWriteToSavedPhotosAlbum</span>(selectedImage, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>) <span class="comment">// 이미지를 저장하는 메서드</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// Delegate 메서드가 구현되어 있지 않을 때는 기본적으로 선택시 종료되도록 기본 구현이 되어있음. ( 그래서 dismiss를 해주어야된다. )</span></span><br><span class="line">        picker.dismiss(animated: <span class="literal">true</span>, completion: <span class="literal">nil</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Dictionary타입인 info에 정보들이 들어옵니다.</p>
+<p><strong>1번</strong>부분을 보시면 UTTypeEqual메서드를 사용하는데 <code>import MobileCoreServices</code>를 임포트 해주어야 사용가능합니다.<br>
+동영상 부분과 사진 촬영부분을 분기 처리 하기위해 사용했지만, info[UIImagePickerControllerOriginalImage]에서 pathExtension(확장자)를 가지고 분기 처리도 할 수 있습니다.</p>
+<p><strong>2번</strong>부분에서 에러가 발생 합니다.</p>
+<blockquote>
+<p>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSPhotoLibraryAddUsageDescription key with a string value explaining to the user how the app uses this data.</p>
+</blockquote>
+<ul>
+<li>해결방법<br>
+plist에서 <code>Privacy - Photo Library Additions Usage Description</code>를 넣어 주어야 된다.</li>
+</ul>
+<blockquote>
+<p>//이미지 앨범에 저장 하는 메서드<br>
+public func UIImageWriteToSavedPhotosAlbum(_ image: UIImage, _ completionTarget: Any?, _ completionSelector: Selector?, _ contextInfo: UnsafeMutableRawPointer?) <br><br>
+//동영상 앨범에 저장하는 메서드<br>
+public func UISaveVideoAtPathToSavedPhotosAlbum(_ videoPath: String, _ completionTarget: Any?, _ completionSelector: Selector?, _ contextInfo: UnsafeMutableRawPointer?)</p>
+</blockquote>
+<p>이제 사진 및 동영상 저장이 정상적으로 저장이 될겁니다.</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/06/iOS/Shortcuts/" data-toggle="tooltip" data-placement="top" title="[iOS] Shortcuts">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/07/06/iOS/UIImagePickerController/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/07/06/iOS/UIImagePickerController/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [Swift] 열거형(Enumeration) - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/05/19/Swift/열거형/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Swift_logo_color.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                            
+                        </div>
+                        <h1>[Swift] 열거형(Enumeration)</h1>
+                        <h2 class="subheading">Swift의 열거형에 대해 알아 보곘습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-05-19
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="열거형-enumeration">열거형 (Enumeration)</span></h1>
+<p>열거형은 연관된 항목을을 묶어서 표현할 수 있는 타입이고,<br>
+다른 타입과는 다르게 프로그래머가 정의해준 항목 값 외에는 추가/수정이 불가능합니다.<br>
+<br></p>
+<h2><span id="열거형-선택-사항">열거형 선택 사항</span></h2>
+<ol>
+<li>제한된 범위네에 선택지를 주고싶을 경우</li>
+<li>정해진 값 외는 입력받고 싶지 않을 경우</li>
+<li>예상된 입력 값이 한정되어 있을 경우<br>
+Ex) 학생 : 초등학생, 중학생, 고등학생, 대학생, 대학원생, 기타<br>
+<br></li>
+</ol>
+<h2><span id="기본-열거형">기본 열거형</span></h2>
+<ul>
+<li>스위프트의 열거형은 <code>enum</code>이라는 키워드로 선언할 수 있습니다.</li>
+<li>각 항목은 그 자체가 고유의 값입니다.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">School</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> primary		<span class="comment">// 유치원</span></span><br><span class="line">  <span class="keyword">case</span> elementary	<span class="comment">// 초등</span></span><br><span class="line">  <span class="keyword">case</span> middle		<span class="comment">// 중등</span></span><br><span class="line">  <span class="keyword">case</span> high		<span class="comment">// 고등</span></span><br><span class="line">  <span class="keyword">case</span> college		<span class="comment">// 대학</span></span><br><span class="line">  <span class="keyword">case</span> university	<span class="comment">// 대학교</span></span><br><span class="line">  <span class="keyword">case</span> graduate		<span class="comment">// 대학원</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="열거형-변수의-생성-및-값-변경">열거형 변수의 생성 및 값 변경</span></h3>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 두 코드는 똑같은 표현.</span></span><br><span class="line"><span class="keyword">var</span> testEnum: <span class="type">School</span> = <span class="type">School</span>.university</span><br><span class="line"><span class="keyword">var</span> testEnum: <span class="type">Schhol</span> = .university</span><br><span class="line"></span><br><span class="line"><span class="comment">// 값 변경</span></span><br><span class="line">testEnum = .graduate</span><br></pre></td></tr></table></figure>
+<h3><span id="원시값raw-value">원시값(Raw Value)</span></h3>
+<p>열거형의 각 항목은 하나의 값의 역할을 할 수 있지만 항목의 <code>원시값</code>도 가질 수 있다.<br>
+즉, 특정 타입으로 지정된 값을 가질 수 있다는 뜻.</p>
+<p>특정 타입의 값을 원시값으로 가지고 싶다면 열거형 오른쪽에 타입을 명시해 주시면되고,<br>
+명시값을 사용하고싶다면 <code>rawValue</code>라는 프로퍼티를 사용해 가져올 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">School</span>: <span class="title">String</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> primary = <span class="string">"유치원"</span>		<span class="comment">// 유치원</span></span><br><span class="line">  <span class="keyword">case</span> elementary = <span class="string">"초등학교"</span>	<span class="comment">// 초등</span></span><br><span class="line">  <span class="keyword">case</span> middle = <span class="string">"중학교"</span>		<span class="comment">// 중등</span></span><br><span class="line">  <span class="keyword">case</span> high = <span class="string">"고등학교"</span>		<span class="comment">// 고등</span></span><br><span class="line">  <span class="keyword">case</span> college = <span class="string">"대학"</span>		<span class="comment">// 대학</span></span><br><span class="line">  <span class="keyword">case</span> university = <span class="string">"대학교"</span>	<span class="comment">// 대학교</span></span><br><span class="line">  <span class="keyword">case</span> graduate = <span class="string">"대학원"</span>	<span class="comment">// 대학원</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> education: <span class="type">School</span> = <span class="type">School</span>.university</span><br><span class="line"><span class="built_in">print</span>(education.rawValue) <span class="comment">// 대학교 라고 출력 됨</span></span><br></pre></td></tr></table></figure>
+<p>만약 일부 항목만 원시값을 주고 싶다면 일부만 값을 지정해도 된다.<br>
+나머지는 스위프트가 알아서 처리 해준다.</p>
+<p>예를 들어 문자열 형식의 원시 값을 지정해 줬다면 각 항목의 이름을 그래도 원시 값으로 가지게 되고,<br>
+정수형이라면 첫 항목을 기준으로 0부터 1씩 늘어난 값을 가지게 된다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">School</span>: <span class="title">String</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> primary = <span class="string">"유치원"</span>		<span class="comment">// 유치원</span></span><br><span class="line">  <span class="keyword">case</span> elementary = <span class="string">"초등학교"</span>	<span class="comment">// 초등</span></span><br><span class="line">  <span class="keyword">case</span> middle = <span class="string">"중학교"</span>		<span class="comment">// 중등</span></span><br><span class="line">  <span class="keyword">case</span> high = <span class="string">"고등학교"</span>		<span class="comment">// 고등</span></span><br><span class="line">  <span class="keyword">case</span> college = <span class="string">"대학"</span>		<span class="comment">// 대학</span></span><br><span class="line">  <span class="keyword">case</span> university </span><br><span class="line">  <span class="keyword">case</span> graduate</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">School</span>.university.rawValue)	<span class="comment">// university 출력</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">School</span>.high.rawValue)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Number</span>: <span class="title">Int</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> zero</span><br><span class="line">  <span class="keyword">case</span> one</span><br><span class="line">  <span class="keyword">case</span> two</span><br><span class="line">  <span class="keyword">case</span> ten = <span class="number">10</span></span><br><span class="line">  <span class="keyword">case</span> eleven</span><br><span class="line">  <span class="keyword">case</span> twelve</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Number</span>.zero.rawValue)		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Number</span>.one.rawValue)		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Number</span>.two.rawValue)		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Number</span>.ten.rawValue)		<span class="comment">// 10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Number</span>.eleven.rawValue)		<span class="comment">// 11</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Number</span>.twelve.rawValue)		<span class="comment">// 12</span></span><br></pre></td></tr></table></figure>
+<p>만약 올바르지 않은 원시값을 통해 접근하려 한다면 <code>nil</code>을 반환한다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="type">Numbers</span>(rawValue: <span class="number">1</span>))		<span class="comment">// one</span></span><br><span class="line"><span class="built_in">print</span>(<span class="type">Numbers</span>(rawValue: <span class="number">5</span>))		<span class="comment">// nil</span></span><br></pre></td></tr></table></figure>
+<h3><span id="연관값을-가지는-열거형">연관값을 가지는 열거형</span></h3>
+<p>열거형 내의 항목(case)이 자신과 연관된 값을 가질 수 있고,<br>
+연관 값은 항목 옆에 소괄호를 이용하여 묶어 표현할 수 있습니다.<br>
+굳이 다른 항목이 연관 값을 가진다고 모든 항목이 연관 값을 가질 필요는 없습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">PastaTaste</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> cream, tomato</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">PizzaDough</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> cheeseCrust, thin, original</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">PizzaTopping</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> pepperoni, cheese, bacon</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">MainDish</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> pasta(tast: <span class="type">PastaTaste</span>)</span><br><span class="line">    <span class="keyword">case</span> pizza(dough: <span class="type">PizzaDough</span>, topping: <span class="type">PizzaTopping</span>)</span><br><span class="line">    <span class="keyword">case</span> chicken(withSauce: <span class="type">Bool</span>)</span><br><span class="line">    <span class="keyword">case</span> rice</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> dinner: <span class="type">MainDish</span> = <span class="type">MainDish</span>.pasta(tast: <span class="type">PastaTaste</span>.cream)</span><br><span class="line">dinner = <span class="type">MainDish</span>.pizza(dough: <span class="type">PizzaDough</span>.thin, topping: <span class="type">PizzaTopping</span>.cheese)</span><br><span class="line">dinner = <span class="type">MainDish</span>.chicken(withSauce: <span class="literal">true</span>)</span><br><span class="line">dinner = <span class="type">MainDish</span>.rice</span><br></pre></td></tr></table></figure>
+<h3><span id="순환-열거형">순환 열거형</span></h3>
+<p>순환 열거형은 열거형 항목의 연관 값이 자기 자신의 값이고자 할 때 사용합니다.<br>
+순환 열거형을 명시하고 싶다면 <code>indirect</code> 키워드를 사용합니다.<br>
+방법은 특정 항목에만 한정하고 싶다면 <code>case키워드 앞에 indirect</code>를 붙여 사용하고,<br>
+열거형 전체에 적용하고 싶다면 <code>enum 키워드 앞에 indirect</code>를 붙여 사용합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//특정 항목에 순환 열겨형 명시</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ArithmeticExpression</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> number(<span class="type">Int</span>)</span><br><span class="line">  <span class="keyword">indirect</span> <span class="keyword">case</span> addition(<span class="type">ArithmeticExpression</span>, <span class="type">ArithmeticExpression</span>)</span><br><span class="line">  <span class="keyword">indirect</span> <span class="keyword">case</span> multiplication(<span class="type">ArithmeticExpression</span>, <span class="type">ArithmeticExpression</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//열거형 전체 순환 열거형 명시</span></span><br><span class="line"><span class="keyword">indirect</span> <span class="class"><span class="keyword">enum</span> <span class="title">ArithmeticExpression2</span> </span>&#123;</span><br><span class="line">  <span class="keyword">case</span> number(<span class="type">Int</span>)</span><br><span class="line">  <span class="keyword">case</span> addition(<span class="type">ArithmeticExpression2</span>, <span class="type">ArithmeticExpression2</span>)</span><br><span class="line">  <span class="keyword">case</span> multiplication(<span class="type">ArithmeticExpression2</span>, <span class="type">ArithmeticExpression2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>좀더 순환(Recursive)라는 표현으로 코드를 짜보자</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">evaluate</span><span class="params">(<span class="number">_</span> expression: ArithmeticExpression)</span></span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> expression &#123;</span><br><span class="line">  <span class="keyword">case</span> .number(<span class="keyword">let</span> value):</span><br><span class="line">    <span class="keyword">return</span> value</span><br><span class="line">  <span class="keyword">case</span> .addition(<span class="keyword">let</span> <span class="keyword">left</span>, <span class="keyword">let</span> <span class="keyword">right</span>):</span><br><span class="line">    <span class="keyword">return</span> evaluate(<span class="keyword">left</span>) + evaluate(<span class="keyword">right</span>)</span><br><span class="line">  <span class="keyword">case</span> .multiplication(<span class="keyword">let</span> <span class="keyword">left</span>, <span class="keyword">let</span> <span class="keyword">right</span>):</span><br><span class="line">    <span class="keyword">return</span> evaluate(<span class="keyword">left</span>) * evaluate(<span class="keyword">right</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> five = <span class="type">ArithmeticExpression</span>.number(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">let</span> two = <span class="type">ArithmeticExpression</span>.number(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sum = <span class="type">ArithmeticExpression</span>.addition(five, two)</span><br><span class="line"><span class="keyword">let</span> mul = <span class="type">ArithmeticExpression</span>.multiplication(sum, <span class="type">ArithmeticExpression</span>.number(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sumResult: <span class="type">Int</span> = evaluate(sum)</span><br><span class="line"><span class="keyword">let</span> mulResult: <span class="type">Int</span> = evaluate(mul)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(sumResult)		<span class="comment">// 7</span></span><br><span class="line"><span class="built_in">print</span>(mulResult)		<span class="comment">// 14</span></span><br></pre></td></tr></table></figure>
+<p>indirect키워드를 이용하면 순환알고리즘을 사용할때 유용하게 사용할 수 있다.</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/05/20/Swift/구조체와 클래스/" data-toggle="tooltip" data-placement="top" title="[Swift] 구조체와 클래스">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/05/17/컴퓨터 기초/메모리구조/" data-toggle="tooltip" data-placement="top" title="[컴퓨터 기초] 메모리구조 (Memory Structure)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/05/19/Swift/열거형/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/05/19/Swift/열거형/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

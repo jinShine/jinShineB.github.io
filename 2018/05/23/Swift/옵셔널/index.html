@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [Swift] 옵셔널(Optionals) - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/05/23/Swift/옵셔널/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Swift_logo_color.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                            
+                        </div>
+                        <h1>[Swift] 옵셔널(Optionals)</h1>
+                        <h2 class="subheading">옵셔널(Optionals)에 대해 알아 보곘습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-05-23
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="옵셔널">옵셔널</span></h1>
+<hr>
+<p>옵셔널은 스위프트의 특징 중 하나인 안전성(Safe)를 담당하는 기능입니다.<br>
+다른 언어에서 볼 수 없었던 옵셔널이란 무엇일까요?<br>
+단어 뜻 그래도 옵셔널은 <code>선택적인</code>,즉 값이 있을수도 있고 없을 수도 있다는 뜻을 나타냅니다.<br>
+이는 변수나 상수에 나타낼 수 있는데 상수나 변수에는 꼭 값이 있다는 보장이 없죠? <code>값이 없을땐 nil</code>일 수도 있다는 뜻입니다.</p>
+<h2><span id="1-옵셔널"><strong>1. 옵셔널?</strong></span></h2>
+<hr>
+<p>디시말하자면, swift에선 nil을 사용하기 위해선 옵셔널을 사용해야만 합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span> = <span class="string">"jinTonics"</span></span><br><span class="line">name = <span class="literal">nil</span>  <span class="comment">// 오류</span></span><br></pre></td></tr></table></figure>
+<p>위에 소스를 보시면 왜 nil을 넣는데 오류가 날까요?<br>
+답은 name이라는 변수가 옵셔널이 아니라서 그렇습니다.<br>
+옵셔널에서만 nil을 사용할 수 있다고 했죠?</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span>? = <span class="string">"jinTonics"</span></span><br><span class="line"><span class="built_in">print</span>(name) <span class="comment">// jinTonics</span></span><br><span class="line"></span><br><span class="line">name = <span class="literal">nil</span></span><br><span class="line"><span class="built_in">print</span>(name) <span class="comment">// nil</span></span><br></pre></td></tr></table></figure>
+<p>옵셔널을 읽을 때 <code>해당 변수 또는 상수에는 값이 없을 수 있다.</code>라고 생각하면 가장 도움이 될 것 같습니다.</p>
+<p>물음표를 붙여주는게 편하고 읽기도 쉬워 긴 표현을 사용하진 않지만 옵셔널의 명확한 표현도 알아 두시면 좋습니다.</p>
+<ul>
+<li><code>물음표(?)</code>, <code>Optional&lt;타입&gt;</code> 둘다 사용 가능</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> optionalType1: <span class="type">String</span>?</span><br><span class="line"><span class="keyword">var</span> optionalType2: <span class="type">Optional</span>&lt;<span class="type">Int</span>&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>옵셔널의 정의</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Optional</span>&lt;<span class="title">Wrapped</span>&gt; : <span class="title">ExpressibleByNilLiteral</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="keyword">none</span></span><br><span class="line">    <span class="keyword">case</span> some(<span class="type">Wrapped</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span> <span class="keyword">init</span>(<span class="number">_</span> some: <span class="type">Wrapped</span>)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>옵셔널은 <code>열거형</code>으로 구현되었습니다!</p>
+<p>살펴보면 nil일때는 none케이스가 될 것이고, 값이 있을때는 some케이스가 될 것입니다.</p>
+<br>
+<blockquote>
+<ul>
+<li><strong>Objective-C와 Swift의 nil의 차이점</strong><br><br>
+-&gt; Swift 에서의 nil 은 Objective-C 에서의 nil 과 다르다.<br><br>
+<strong>nil of Swift</strong> : 값이 없다  in 모든타입 (Reference or Value Type)<br><br>
+<strong>nil of Objective-C</strong> : 값이 없다 in Reference Type <br></li>
+</ul>
+</blockquote>
+<ul>
+<li>Objective-C에서 nil과 null의 차이<br>
+오브젝티브C에서 nil은 객체 참조에 사용되고 null은 기타 다른 포인터 자료형에 사용합니다.</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//nil 사용</span></span><br><span class="line">MyClass *obj = <span class="literal">nil</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// null 사용</span></span><br><span class="line"><span class="keyword">int</span> *ptr = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<h2><span id="2-옵셔널-추출"><strong>2. 옵셔널 추출</strong></span></h2>
+<hr>
+<p>열거형의 some 케이스로 꼭꼭 숨어있는 <code>옵셔널의 값을 옵셔널이 아닌 값으로 추출</code>하는 방법에 대해 알아 보겠습니다.</p>
+<h3><span id="21-강제-추출forced-unwrapping">2.1 강제 추출(Forced Unwrapping)</span></h3>
+<p>옵셔널의 값을 강제 추출하려면 옵셔널 값의 뒤에 <code>느낌표(!)</code>를 붙여주면 값을 강제로 추출하여 반환해줍니다.<br>
+옵셔널의 값을 추출하는 가장 간단한 방법이지만 <code>가장 위험한 방법</code>입니다.<br>
+왜냐하면 런타임 오류가 일어날 가능성이 가장 높기 때문입니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name:<span class="type">String</span>? = <span class="string">"jinTonics"</span></span><br><span class="line"><span class="keyword">var</span> yourName:<span class="type">String</span> = name!</span><br><span class="line"></span><br><span class="line">name = <span class="literal">nil</span></span><br><span class="line">yourName = name! <span class="comment">// 런타임시 오류가 발생한다.</span></span><br></pre></td></tr></table></figure>
+<p>강제 추출방식 사용은 런타임 오류의 가능성이 내포되어있기 때문에 지양해야됩니다.</p>
+<h3><span id="22-옵셔널-바인딩optional-binding">2.2 옵셔널 바인딩(Optional Binding)</span></h3>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> name != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(name)</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"name은 nil"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>다른 언어에서 위의 코드처럼 NULL값을 체크하는 방식과 비슷합니다.<br>
+스위프트에선 이런 방식을 새로 정한것을 <code>옵셔널 방식</code>이라고 합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span>? = <span class="string">"jinTonics"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//옵셔널 바인딩을 이용해 임시로 상수 할당을 하여 값을 넣어 줄 수 있다.</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> findName = name &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"My name is \(findName))</span></span><br><span class="line"><span class="string">&#125;else&#123;</span></span><br><span class="line"><span class="string">    print("</span>name은 <span class="literal">nil</span>입니다.<span class="string">")</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">//My name is jinTonics</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if var findName = name &#123;</span></span><br><span class="line"><span class="string">    fineName = "</span>haha<span class="string">"</span></span><br><span class="line"><span class="string">    print("</span><span class="type">My</span> name <span class="keyword">is</span> \(findName))</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"name은 nil입니다."</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//My name is haha</span></span><br></pre></td></tr></table></figure>
+<p>옵셔널 바인딩은 옵셔널에 값이 있는지 확인할 때 사용합니다. 옵셔널에 값이 있다면 옵셔널에서 추출된 값을 일정 블록 안에서 사용할 수 있는 상수나 변수로 할당해서 옵셔널이 아닌 형태로 사용할 수 있도록 해줍니다.</p>
+<p>예제에서 if문에 임시 상수와 변수로 할당했는데 if문 안에서만 사용할 수 있고, 밖에서나 else안에서도 사용할 수 없습니다.</p>
+<p>옵셔널 바인딩을 통해 쉽표(,)를 이용해 한번에 여러 옵셔널의 값을 추출할 수도 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span>? = <span class="string">"jinTonics"</span></span><br><span class="line"><span class="keyword">var</span> yourName: <span class="type">String</span>? = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> findName1 = name, <span class="keyword">let</span> findName2 = yourName &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"여러 옵셔널을 추출 할 수 있습니다, \(findName1),\(findName2)"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="23-암시적-추출-옵셔널implicitly-unwrapped-optionals">2.3 암시적 추출 옵셔널(Implicitly Unwrapped Optionals)</span></h3>
+<p>때때로 nil을 할당하고 싶지만, 옵셔널 바인딩으로 매번 값을 추출하기 귀찮거나 로직상으로 nil 때문에 런타임 오류가 발생하지 않을 것 같다는 확신이 들때 nil을 할당해줄 수 있는 옵셔널이 아닌 변수나 상수가 있으면 좋을 겁니다. 이때 사용하는 것이 <code>암시적 추출 옵셔널</code>입니다.</p>
+<p>옵셔널을 표시하고자 할 때 타입 뒤에 물음표(?)를 사용했지만, 암시적 추출 옵셔널을 사용하려면 타입 뒤에 느낌표(!)를 사용해주시면 됩니다.</p>
+<p>암시적 추출 옵셔널로 지정된 타입은 일반 값처럼 사용할 수 있으나, 여전히 옵셔널이기 때문에 nil도 할당해 줄 수 있습니다.</p>
+<p>그러나 nil이 할당되어 있을 때 접근을 시도하면 런타임 오류가 발생합니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span>! = <span class="string">"jinTonics"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(name) <span class="comment">// jinTonics</span></span><br><span class="line"></span><br><span class="line">name = <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//암시적 추출 옵셔널도 옵셔널이므로 당연히 바인딩 사용 가능</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">var</span> myName = name &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"My name is \(myName))</span></span><br><span class="line"><span class="string">&#125; else &#123;</span></span><br><span class="line"><span class="string">    print("</span>myName은 <span class="literal">nil</span>입니다<span class="string">")    </span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>옵셔널을 사용할 때는 강제 추출 또는 암시적 강제 옵셔널을 사용하기보다는 옵셔널 바인딩을 이용하는것이 훨씬 안전하고 지향하는 방법입니다.</p>
+<h3><span id="24-nil-병합-연산자">2.4 nil 병합 연산자</span></h3>
+<p>nil병합 연산자는 옵셔널을 사용할 때 아주 유용하게 사용될 수 있는 연산자 입니다.</p>
+<blockquote>
+<p>A ?? B<br>
+-&gt; A가 nill이 아니면 A를 반환하고, A가 nil이면 B를 반환합니다.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someValue: <span class="type">Int</span> = optionalInt != <span class="literal">nil</span> ? optionalInt! : <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 위의 코드와 같은 결과를 볼 수 있지만 훨씬 더 안저하게 옵셔널을 다룰 수 있습니다.</span></span><br><span class="line"><span class="keyword">let</span> someValue: <span class="type">Int</span> = optionalInt ?? <span class="number">0</span></span><br></pre></td></tr></table></figure>
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/05/24/Swift/Initializer/" data-toggle="tooltip" data-placement="top" title="[Swift] 이니셜라이저(Initializer)">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/05/23/Swift/프로퍼티/" data-toggle="tooltip" data-placement="top" title="[Swift] 프로퍼티(Property)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/05/23/Swift/옵셔널/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/05/23/Swift/옵셔널/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

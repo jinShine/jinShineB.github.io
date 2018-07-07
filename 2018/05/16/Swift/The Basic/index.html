@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [Swift] The Basic 문법 - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/05/16/Swift/The Basic/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Swift_logo_color.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                            
+                        </div>
+                        <h1>[Swift] The Basic 문법</h1>
+                        <h2 class="subheading">Swift의 기본 문법에 대해 알아 보겠습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-05-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="hellow-swift">Hellow Swift</span></h1>
+<hr>
+<blockquote>
+<p>Objective-C를 가지고 iOS개발을 진행하고있다가도, 마음 한구석에 Swift라는놈이 신경이쓰여 이제라도 Swift를 공부하면서 문법에 대해 정리 해보려고 합니다.</p>
+</blockquote>
+<blockquote>
+<p>print(“Hello, world!, Hello Swift”)</p>
+</blockquote>
+<p>애플에서 최초에 스위프트를 발표했을 때 스위프트 언어의 특징을 Safe, Modern, Powerful이라고 발표했습니다. 하지만 오픈소스로 전환되면서 특징을 <code>Safe, Fast, Expressive</code>라고 변경했습니다.<br>
+이 특징에 걸맞게 정말 멋지게 변하고 있는 언어입니다.</p>
+<p>많은 분들이 접해봤을 C++, JAVA등의 언어는 명령형 프로그래밍(절자치향) 객체지향 프로그래밍 패러다임을 동시에 차용한 다중 프로그래밍 패러다임 언어입니다.</p>
+<p>하지만 Swift는 여기에 <code>함수형 프로그래밍 패러다임</code>과 <code>프로토콜 지향 프로그래밍 패러다임</code>을 더한 언어이고, 스크립트 언어가 아닌 <code>컴파일 언어</code>입니다.</p>
+<h2><span id="semicolon">Semicolon (;)</span></h2>
+<p>Objective-C를 하다가 혹은, 다른 언어를 하다가 Swift를 처음 접할때 쉽게 적응되지 않는 부분이 Semicolon(;) 녀석입니다.</p>
+<p>각 라인의 마지막에 붙는 세미콜론은 옵션이고,<br>
+한 라인에 여러 구문(다중 명령)을 사용하고 싶을 경우는 세미콜론 필수</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">1</span>); <span class="built_in">print</span>(<span class="number">2</span>); <span class="built_in">print</span>(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//print(1);</span></span><br><span class="line"><span class="comment">//print(2);</span></span><br><span class="line"><span class="comment">//print(3);</span></span><br></pre></td></tr></table></figure>
+<h2><span id="주석comment">주석(Comment)</span></h2>
+<ul>
+<li>//  : 한 줄 주석</li>
+<li>/// : 한 줄 주석 + Quick Help Markup</li>
+<li>/* */ : 멀티 라인 주석  (Nested 가능)</li>
+</ul>
+<p>주석의 기능들은 어느 언어나 비슷할꺼같습니다.<br>
+주석을 자세히 적어주는게 중요하다는데 먼저 사용하는 이유에 대해 알아 보도록 하겠습니다.</p>
+<ol>
+<li>빠르게 특정 부분의 코드를 비활성화</li>
+<li>협업 또는 인계 시 이해를 돕기 위해</li>
+<li>자기 자신을 위해</li>
+<li>문서화</li>
+</ol>
+<p>사실 주석이 없이도 쉽게 이해할 수 있을 만한 코드를 짜는 것이 베스트이긴 하지만,<br>
+이것 또한 쉽지 않으니 주석을 다는 습관을 들이시는게 중요합니다.<br>
+<br></p>
+<hr>
+<h1><span id="변수와-상수-variables-and-constants">변수와 상수 (Variables And Constants)</span></h1>
+<p>상수와 변수는 현재 어떤 데이터에 대한 상태값, 속성 정보 등을 담고 있는 컨테이너</p>
+<p>상수 (Constants) : 한 번 설정되면 값 변경 불가<br>
+변수 (Variables) : 설정한 값을 변경 가능</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> maximumNumberOfLoginAttepmts = <span class="number">10</span></span><br><span class="line">maximumNumberOfLoginAttepmts = <span class="number">20</span> <span class="comment">// 불가</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> maximumNumberOfLoginAttepmts = <span class="number">10</span></span><br><span class="line">maximumNumberOfLoginAttepmts = <span class="number">20</span> <span class="comment">// 변경 가능</span></span><br></pre></td></tr></table></figure>
+<h2><span id="declare-multiple-constants-or-variables">Declare multiple constants or variables</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">0.0</span>, y = <span class="number">0.0</span>, z = <span class="number">0.0</span></span><br><span class="line">x = <span class="number">1</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line">z = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<h2><span id="naming">Naming</span></h2>
+<p>영어 외에도 유니코드 문자를 포함한 대부분의 문자를 사용해 네이밍 가능</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> π = <span class="number">3.14159</span></span><br><span class="line"><span class="keyword">let</span> 你好 = <span class="string">"你好世界"</span></span><br><span class="line"><span class="keyword">let</span> 🐶🐮 = <span class="string">"dogcow"</span></span><br><span class="line"><span class="keyword">let</span> 한글 = <span class="string">"세종대왕"</span></span><br><span class="line"><span class="keyword">let</span> `<span class="keyword">let</span>` = <span class="number">1</span>   <span class="comment">// Swift 에서 사용되는 키워드일 경우 backquote(`) 를 이용해 사용 가능</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(π)</span><br><span class="line"><span class="built_in">print</span>(你好)</span><br><span class="line"><span class="built_in">print</span>(한글)</span><br><span class="line"><span class="built_in">print</span>(🐶🐮)</span><br><span class="line"><span class="built_in">print</span>(`<span class="keyword">let</span>`)</span><br></pre></td></tr></table></figure>
+<h2><span id="변수로-사용할-수-없는-이름">변수로 사용할 수 없는 이름</span></h2>
+<ol>
+<li>같은 스코프 범위 내에서 중복되는 이름</li>
+<li>공백문자</li>
+<li>수학 기호 (√, ∑ 등)</li>
+<li>화살표 (→, ← 등)</li>
+<li>숫자로 시작하는 이름 (시작 부분 외에는 사용 가능)</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// e.g.</span></span><br><span class="line"><span class="comment">// let 한글 = "ㄱ"</span></span><br><span class="line"><span class="comment">// let 공 백 = "X"</span></span><br><span class="line"><span class="comment">// let √ = "root"</span></span><br><span class="line"><span class="comment">// let → = "arrow"</span></span><br><span class="line"><span class="comment">// let 369게임 = "12짝45짝..."</span></span><br></pre></td></tr></table></figure>
+<br>
+<hr>
+<h1><span id="type-annotation-and-type-inference">Type Annotation And Type Inference</span></h1>
+<p>Swift 에는 2가지의 타입이 존재 합니다.</p>
+<h2><span id="type-annotation">Type Annotation</span></h2>
+<ul>
+<li>변수 선언 시 사용될 자료의 타입을 명확하게 지정하는 것.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> year: <span class="type">Int</span> = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> language: <span class="type">String</span></span><br><span class="line">language = “<span class="type">Swift</span> <span class="number">4</span>”</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> red, green, blue: <span class="type">Double</span></span><br><span class="line">red = <span class="number">255.0</span></span><br><span class="line">green = <span class="number">150.123</span></span><br><span class="line">blue = <span class="number">75</span></span><br></pre></td></tr></table></figure>
+<h2><span id="type-inference-타입-추론">Type Inference (타입 추론)</span></h2>
+<ul>
+<li>변수 선언시 초기화로 사용되는 값의 타입을 통해 변수의 타입을 추론하여 적용하는 것.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">주의</span></span><br><span class="line"><span class="comment">let language</span></span><br><span class="line"><span class="comment">language = "Swift 4"  // 이런식으로 타입추론을 쓰게 되면 var로 바꿔줘야 한다. (Type Annotation참고)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> name: <span class="type">String</span> = “<span class="type">Tori</span>”</span><br><span class="line"><span class="comment">// type(of: name) </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> age: <span class="type">Int</span> = <span class="number">4</span></span><br><span class="line"><span class="comment">// type(of: age)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> weight = <span class="number">6.4</span></span><br><span class="line"><span class="comment">// type(of: weight) // Double 추론</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> spelling = [“<span class="type">T</span>”, “<span class="type">O</span>”, “<span class="type">R</span>”, “<span class="type">I</span>”]</span><br><span class="line"><span class="comment">// type(of: spelling) //Array&lt;String&gt; 타입 추론</span></span><br></pre></td></tr></table></figure>
+<pre><code>* type(of:) 를 이용해 타입을 확인 할 수 있다.
+</code></pre>
+<br>
+<hr>
+<h1><span id="literals">Literals</span></h1>
+<ul>
+<li>상수 : 고정된 값(메모리 주소)를 가지는 심볼/식별자</li>
+<li>리터럴: 변수에 넣는 변하지 않는 데이터를 의미하는 것이다.<br>
+ex) int a = 1;
+<ul>
+<li>소스코드에서 고정된 값으로 표현되는 <code>문자(데이터) 그 자체</code></li>
+<li>정수 / 실수/ 문자 /문자열 / 불리언 리터럴 등</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> signedInteger: <span class="type">Int</span> = <span class="number">123</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> decimalInteger = <span class="number">17</span></span><br><span class="line"><span class="keyword">let</span> binaryInteger = <span class="number">0b1001</span>         <span class="comment">//0b로 시작하면 2진법으로 사용가능</span></span><br><span class="line"><span class="keyword">let</span> octalInteger = <span class="number">0o21</span>            <span class="comment">//0o로 시작하면 8진법 사용가능</span></span><br><span class="line"><span class="keyword">let</span> hexadecimalInteger = <span class="number">0x11</span>      <span class="comment">//0x로 시작하면 16진법 사용가능</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bigNumber = <span class="number">1_000_000_000</span> 		<span class="comment">// 숫자가 크면 끊어서 사용할수 있게 Swift에서 제공</span></span><br><span class="line">bigNumber = <span class="number">000_001_000_000_000</span></span><br><span class="line">bigNumber = <span class="number">0b1000_100_000_000_000</span></span><br><span class="line">bigNumber = <span class="number">0o1000_100_000_000_000</span></span><br><span class="line">bigNumber = <span class="number">0x1000_100_000_000_000</span></span><br></pre></td></tr></table></figure>
+<p><code>0b</code>로 시작하면 2진법<br>
+<code>0o</code>로 시작하면 8진법<br>
+<code>0x</code>로 시작하면 16진법</p>
+<hr>
+<h1><span id="type">Type</span></h1>
+<p>Swift의 기본 데이터 타입</p>
+<ul>
+<li>Bool</li>
+<li>Int, Uint</li>
+<li>Float, Double</li>
+<li>Character, String</li>
+</ul>
+<p><strong>Swift는 다른 데이터 타입과 자료 교환은 불가능!</strong></p>
+<h2><span id="bool">Bool</span></h2>
+<ul>
+<li>Swift에선 1,0 으로 true, false를 표현을 할 수 없다.</li>
+<li>앞에 is가 붙으면 Bool타입인걸 알 수 있다.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Bool</span></span><br><span class="line"><span class="keyword">var</span> someBool : <span class="type">Bool</span> = <span class="literal">true</span>;</span><br><span class="line">someBool = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//에러를 발생 (C언어라고 생각하면 안됨, Bool타입에 INT형이 들어간 상황)</span></span><br><span class="line"><span class="comment">//someBool = 0</span></span><br><span class="line"><span class="comment">//someBool = 1</span></span><br></pre></td></tr></table></figure>
+<h2><span id="int-uint">Int, Uint</span></h2>
+<ul>
+<li>8-bit : Int8, UInt8</li>
+<li>16-bit : Int16, UInt16</li>
+<li>32-bit : Int32, UInt32</li>
+<li>64-bit : Int64, UInt64</li>
+<li>Platform dependent : Int, UInt (64-bit on modern devices)</li>
+</ul>
+<p>//메모리 사이즈 알고 싶을때 MemoryLayout&lt;&gt;를 사용<br>
+MemoryLayout<float>.size</float></p>
+<p>//타입 범위를 알고 싶을떄 타입.max, 타입.min<br>
+print(Int8.max)<br>
+print(Int8.min)</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Int</span>&gt;.size 	<span class="comment">// 8</span></span><br><span class="line"><span class="type">Int</span>.<span class="built_in">max</span>					<span class="comment">// 9223372036854775807</span></span><br><span class="line"><span class="type">Int</span>.<span class="built_in">min</span>					<span class="comment">// -9223372036854775808</span></span><br><span class="line"></span><br><span class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">UInt</span>&gt;.size	<span class="comment">// 8</span></span><br><span class="line"><span class="type">UInt</span>.<span class="built_in">max</span>					<span class="comment">// 9223372036854775807</span></span><br><span class="line"><span class="type">UInt</span>.<span class="built_in">min</span>					<span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">Int8</span>&gt;.size	<span class="comment">// 1</span></span><br><span class="line"><span class="type">Int8</span>.<span class="built_in">max</span>					<span class="comment">// 127</span></span><br><span class="line"><span class="type">Int8</span>.<span class="built_in">min</span>					<span class="comment">// -128</span></span><br><span class="line"></span><br><span class="line"><span class="type">MemoryLayout</span>&lt;<span class="type">UInt8</span>&gt;.size	<span class="comment">// 1</span></span><br><span class="line"><span class="type">UInt8</span>.<span class="built_in">max</span>					<span class="comment">// 255</span></span><br><span class="line"><span class="type">UInt8</span>.<span class="built_in">min</span>					<span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<h2><span id="float-double">Float, Double</span></h2>
+<ul>
+<li>
+<p>Double - 최소 소수점 이하 <code>15 자리수</code> 이하의 정밀도</p>
+</li>
+<li>
+<p>Float - 최소 소수점 이하 <code>6 자리수</code> 이하의 정밀도</p>
+<p><strong>부동 소수점이므로 소수점 이하의 정밀도는 변경 될 수 있음</strong></p>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 기본타입으로 Double 입니다!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> floatingPointValue = <span class="number">1.23</span></span><br><span class="line">type(of: floatingPointValue) <span class="comment">// Double</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> floatValue: <span class="type">Float</span> = <span class="number">1.23</span></span><br><span class="line">type(of: floatValue) <span class="comment">// Float</span></span><br></pre></td></tr></table></figure>
+<h2><span id="string">String</span></h2>
+<ul>
+<li>String : 문자열 타입. 유니코드 사용. 큰따옴표(&quot;&quot;) 사용.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">" "</span> <span class="comment">// 이렇게 선업하면 기본으로 String 타입.</span></span><br><span class="line"><span class="keyword">var</span> language: <span class="type">String</span> = <span class="string">"Swift4"</span></span><br></pre></td></tr></table></figure>
+<h2><span id="character">Character</span></h2>
+<ul>
+<li>Character : 문자 타입. 유니코드 사용. 큰따옴표(&quot;&quot;) 사용.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nonCharacter = “<span class="type">C</span>”</span><br><span class="line"><span class="built_in">print</span>(type(of: nonCharacter)) <span class="comment">// String타입으로 나온다 (기본 타입이 String이기 떄문에)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> character: <span class="type">Character</span> = <span class="string">"C"</span></span><br><span class="line"><span class="built_in">print</span>(type(of: character)) <span class="comment">// Character타입</span></span><br><span class="line"></span><br><span class="line">character = <span class="string">" "</span></span><br><span class="line"><span class="built_in">print</span>(type(of: character)) <span class="comment">// Character타입</span></span><br><span class="line"> </span><br><span class="line">character = <span class="string">""</span> <span class="comment">// Character타입이기떄문에 에러가 난다 (""은 String 표현이고, Charter는 하나의 문자를 사용)</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1><span id="typealias-별칭">Typealias (별칭)</span></h1>
+<ul>
+<li>문맥상 더 적절한 이름으로 기존 타입의 이름을 참조하여 사용하고 싶을 경우 사용</li>
+<li><code>typealias &lt;type name&gt; = &lt;type expression&gt;</code></li>
+<li>typealias를 쓸때 이름은 대문자로 시작한다.</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typealias</span> <span class="type">MyInt</span>: <span class="type">Int</span></span><br><span class="line"><span class="keyword">typealias</span> <span class="type">YourInt</span>: <span class="type">Int</span></span><br><span class="line"><span class="keyword">typealias</span> <span class="type">MyDouble</span>: <span class="type">Double</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> age: <span class="type">MyInt</span> = <span class="number">100</span> <span class="comment">// MyInt는 Int의 또 다른 이름</span></span><br><span class="line"><span class="keyword">let</span> year: <span class="type">MyDouble</span> = <span class="number">55.2</span> <span class="comment">// 다른 자료형도 모두 별칭 가능</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1><span id="tuple튜플">Tuple(튜플)</span></h1>
+<p>튜플은 타입의 이름이 따로 지정되어 있지 않은, 프로그래머 마음대로 만드는 타입니다. <code>지정된 데이터의 묶음</code>이라고 표현할 수 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person: (<span class="type">String</span>, <span class="type">Int</span>, <span class="type">Double</span>) = (<span class="string">"jinTonics"</span>, <span class="number">10</span>, <span class="number">888.5</span>) <span class="comment">// String, Int, Double 타입을 갖는 튜플</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"이름: \(person.0), 나이: \(person.1), 신장: \(person.2)"</span>) <span class="comment">// 인덱스를 통해서 값을 가져올 수 있습니다.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//인덱스를 통해 값을 할당할 수 있습니다.</span></span><br><span class="line">person.<span class="number">1</span> = <span class="number">50</span></span><br><span class="line">person.<span class="number">2</span> = <span class="number">111.5</span></span><br></pre></td></tr></table></figure>
+<p>위의 예제를 보면 이름 대신 숫자를 표현하기 때문에 간편해 보일 수 있지만, 차후에 다른 프로그래머가 코드를 볼 때 각 요소가 어떤 의미를 갖는지 유추하기가 쉽지 않고, 이름없이 인덱스만으로  각 요소의 데이터가 무엇을 나타내는지도 파악하기 쉽지 않습니다.</p>
+<p>그래서 튜플의 요소마다 이름을 붙여줄 수도 있습니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//String, Int, Double 타입을 갖는 튜플</span></span><br><span class="line"><span class="keyword">var</span> person: (name: <span class="type">String</span>, age: <span class="type">Int</span>, height: <span class="type">Double</span>) = (<span class="string">"kim"</span>, <span class="number">28</span>, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 인덱스를 통해서 값을 가져올 수 있습니다.</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"이름: \(person.name), 나이: \(person.age), 신장: \(person.height)"</span>)</span><br></pre></td></tr></table></figure>
+<p>개인마다 다르겠지만, 튜플은 타입이 따로 지정되있지 않기 때문에 튜플에서 자주 사용됩니다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String, Int, Double를 갖는 튜플</span></span><br><span class="line"><span class="keyword">typealias</span> <span class="type">SeunginTuple</span> = (name: <span class="type">String</span>, age: <span class="type">Int</span>, height: <span class="type">Double</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jinTonic: <span class="type">SeunginTuple</span> = (<span class="string">"KimSeungJin"</span>,<span class="number">99</span>,<span class="number">199.5</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"이름:\(jinTonic.name), 나이:\(jinTonic.age), 키:\(jinTonic.height)"</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1><span id="type-conversion-형식-변환">Type Conversion (형식 변환)</span></h1>
+<ul>
+<li>타입을 다른 타입으로 변환하는 것</li>
+<li>타입 ( )</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> height = <span class="type">Int8</span>(<span class="number">5</span>)  <span class="comment">// 5를 Int8타입으로 변환</span></span><br><span class="line"><span class="keyword">let</span> h = <span class="type">UInt8</span>(<span class="number">25</span>) 	<span class="comment">// 25를 UInt타입으로 변환 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> num = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> floatNum = <span class="type">Float</span>(num)</span><br><span class="line">type(of: floatNum) <span class="comment">// Float 타입</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> signedInteger = <span class="type">Int</span>(floatNum)</span><br><span class="line">type(of: signedInteger) <span class="comment">// Int 타입</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="type">String</span>(num)</span><br><span class="line">type(of: str) <span class="comment">// String 타입</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// magnitude, abs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> integer = <span class="type">Int</span>(-<span class="number">15</span>)</span><br><span class="line"><span class="keyword">let</span> magnitude = integer.magnitude <span class="comment">// 15</span></span><br><span class="line"><span class="keyword">let</span> absNum = <span class="built_in">abs</span>(integer) <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>절대값을 나타내는 <code>magnitude</code>와 <code>abs</code>는 똑같이 15를 나타내는데 차이점은 무엇일까?<br>
+-&gt; magnitude는 <code>UInt</code>로 변환, <code>abs</code>는 Int로 변환</li>
+</ul>
+<hr>
+<h1><span id="basic-operation">Basic Operation</span></h1>
+<ul>
+<li>+, -, *, / 4가지가 있다.</li>
+</ul>
+<h2><span id="terminology">Terminology</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">123</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="number">456</span></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">c</span>: <span class="type">Int</span>? = <span class="number">789</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unary Operator (단항 연산자)</span></span><br><span class="line">-a</span><br><span class="line"></span><br><span class="line"><span class="comment">// Prefix (전위 표기법)</span></span><br><span class="line">-a</span><br><span class="line"></span><br><span class="line"><span class="comment">// Postfix (후위 표기법)</span></span><br><span class="line"><span class="built_in">c</span>!</span><br><span class="line"></span><br><span class="line"><span class="comment">// Binary Operator (이항 연산자)</span></span><br><span class="line">a + b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Infix (중위 표기법)</span></span><br><span class="line">a + b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Ternary Operator (삼항 연산자)</span></span><br><span class="line"><span class="comment">// Swift 에서 삼항 연산자는 단 하나</span></span><br><span class="line">a &gt; <span class="number">0</span> ? <span class="string">"positive"</span> : <span class="string">"negative"</span></span><br></pre></td></tr></table></figure>
+<h2><span id="대입연산자-assignment-operators">대입연산자 (Assignment Operators)</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Basic assignment operator</span></span><br><span class="line"><span class="keyword">var</span> value = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Addition assignment operator</span></span><br><span class="line">value = value + <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Subraction assignment operator</span></span><br><span class="line">value = value - <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Multiplication assignment operator</span></span><br><span class="line">value = value * <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Division assignment operator</span></span><br><span class="line">value = value / <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Modulo assignment operator</span></span><br><span class="line">value = value % <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Compound Assignment Operators</span></span><br><span class="line">value += <span class="number">10</span></span><br><span class="line">value -= <span class="number">5</span></span><br><span class="line">value *= <span class="number">2</span></span><br><span class="line">value /= <span class="number">2</span></span><br><span class="line">value %= <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Swift는  ++, —를 지원하지 않는다.<br>
+Ex) value ++, value —</li>
+</ul>
+<h2><span id="산술-연산자-arithmetic-operators">산술 연산자 (Arithmetic Operators)</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unary plus opertor</span></span><br><span class="line">+a</span><br><span class="line"></span><br><span class="line"><span class="comment">// Addition Operator</span></span><br><span class="line">a + b</span><br><span class="line"></span><br><span class="line"><span class="string">"Hello, "</span> + <span class="string">"world"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unary minus Operator</span></span><br><span class="line">-a</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subtraction Operator</span></span><br><span class="line">a - b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Multiplication Operator</span></span><br><span class="line">a * b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Division Operator</span></span><br><span class="line">b / a</span><br><span class="line"></span><br><span class="line"><span class="comment">// Modulo operator</span></span><br><span class="line">b % a</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> e = <span class="number">123.4</span></span><br><span class="line"><span class="keyword">let</span> f = <span class="number">5.678</span></span><br></pre></td></tr></table></figure>
+<p>Modulo Operator (나머지 연산자)에서 살펴봐야할 것이 있다.<br>
+위에 예제에서 e % f 로 실수의 나머지를 구하면 에러가 난다. 왜그럴까?<br>
+이유는 나머지 연산자는 정수 유형만 지원하기 때문에 컴파일러가 truncatingRemainder(dividingBy:) 함수를 쓰라고 권유하고 있다.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> e = <span class="number">123.4</span></span><br><span class="line"><span class="keyword">let</span> f = <span class="number">5.678</span></span><br><span class="line"></span><br><span class="line">e.truncatingRemainder(dividingBy: f)   <span class="comment">// 4.162000000000007</span></span><br></pre></td></tr></table></figure>
+<h2><span id="오버플로우-연산자-overflow-operators">오버플로우 연산자 (Overflow Operators)</span></h2>
+<p>Swift는 오버플로우를 지원하지 않는다. 만약 오버플로우가 발생할 경우 유효하지 않은 값을 할당하는 것 보다 에러를 발생시킨다. 이러한 행동은 너무 큰 수나 너무 작은 수를 작업할 때 추가적으로 안전하다.</p>
+<p>하지만 때로는, 에러를 발생시키는 것 보다 오버플로우를 발생하는 것이 나을 때도 있다. 산술 오버플로우 연산자는 기존 연산자에 &amp;를 앞에 붙인다.</p>
+<ul>
+<li>오버플로우 덧셈연산자(&amp;+)</li>
+<li>오버플로우 뺄셈연산자(&amp;-)</li>
+<li>오버플로우 곱셈연산자(&amp;*)</li>
+<li>오버플로우 나눗셈연산자(&amp;/)</li>
+<li>오버플로우 나머지연산자(&amp;%)</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Overflow addition</span></span><br><span class="line"><span class="comment">//var add: Int8 = Int8.max + 1</span></span><br><span class="line"><span class="keyword">var</span> add: <span class="type">Int8</span> = <span class="type">Int8</span>.<span class="built_in">max</span> &amp;+ <span class="number">1</span>		 <span class="comment">// -128</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Overflow subtraction</span></span><br><span class="line"><span class="comment">//var subtract: Int8 = Int8.min - 1</span></span><br><span class="line"><span class="keyword">var</span> subtract: <span class="type">Int8</span> = <span class="type">Int8</span>.<span class="built_in">min</span> &amp;- <span class="number">1</span>	  <span class="comment">// 127</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Overflow multiplication</span></span><br><span class="line"><span class="comment">//var multiplication: Int8 = Int8.max * 2</span></span><br><span class="line"><span class="keyword">var</span> multiplication: <span class="type">Int8</span> = <span class="type">Int8</span>.<span class="built_in">max</span> &amp;* <span class="number">2</span>	   <span class="comment">// -2</span></span><br></pre></td></tr></table></figure>
+<h2><span id="비교-연산자-comparison-operators">비교 연산자 (Comparison Operators)</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Equal to operator</span></span><br><span class="line">a == b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Not equal to operator</span></span><br><span class="line">a != b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Greater than operator</span></span><br><span class="line">a &gt; b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Greater than or equal to operator</span></span><br><span class="line">a &gt;= b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Less than operator</span></span><br><span class="line">a &lt; b</span><br><span class="line"></span><br><span class="line"><span class="comment">// Less than or equal to operator</span></span><br><span class="line">a &lt;= b</span><br></pre></td></tr></table></figure>
+<ul>
+<li>스위프트에서 문자열 비교는 <code>==</code>로 한다</li>
+<li>A와 B가 같은 레퍼런스 타입일 때 비교는 <code>===</code>로 한다</li>
+</ul>
+<h2><span id="논리-연산자-logical-operators">논리 연산자 (Logical Operators)</span></h2>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Logical AND Operator</span></span><br><span class="line"><span class="literal">true</span> &amp;&amp; <span class="literal">true</span>		<span class="comment">// ture</span></span><br><span class="line"><span class="literal">true</span> &amp;&amp; <span class="literal">false</span>		<span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> &amp;&amp; <span class="literal">true</span>		<span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> &amp;&amp; <span class="literal">false</span>	<span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logical OR Operator</span></span><br><span class="line"><span class="literal">true</span> || <span class="literal">true</span>		<span class="comment">// true</span></span><br><span class="line"><span class="literal">true</span> || <span class="literal">false</span>		<span class="comment">// true</span></span><br><span class="line"><span class="literal">false</span> || <span class="literal">true</span>		<span class="comment">// true</span></span><br><span class="line"><span class="literal">false</span> || <span class="literal">false</span>	<span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logical Negation Operator</span></span><br><span class="line">!<span class="literal">true</span>		<span class="comment">// false</span></span><br><span class="line">!<span class="literal">false</span>	<span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Combining Logical Operators</span></span><br><span class="line"><span class="keyword">let</span> enteredDoorCode = <span class="literal">true</span></span><br><span class="line"><span class="keyword">let</span> passedRetinaScan = <span class="literal">false</span></span><br><span class="line"><span class="keyword">let</span> hasDoorKey = <span class="literal">false</span></span><br><span class="line"><span class="keyword">let</span> knowsOverridePassword = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2><span id="삼항-조건-연산자-ternary-conditional-operator">삼항 조건 연산자 (Ternary Conditional Operator)</span></h2>
+<ul>
+<li>조건식 ? 참 : 거짓<br>
+-&gt; 조건식이 True면 참(첫번째), 거짓이면 거짓(두번째)값이 발생</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a &gt; <span class="number">0</span> ? <span class="string">"positive"</span> : <span class="string">"zero or negative"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> a &gt; <span class="number">0</span> &#123;</span><br><span class="line"><span class="string">"positive"</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="string">"zero or negative"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="범위-연산자-range-operators">범위 연산자 (Range Operators)</span></h2>
+<ul>
+<li>Closed Range Operator<br>
+Ex) 0…100 : 0 부터 100 까지</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Closed Range Operator</span></span><br><span class="line"><span class="number">0</span>...<span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">1</span>...<span class="number">5</span> &#123;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"(index) times 5 is (index * 5)"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Half-Open Range Operator<br>
+Ex) 0…&lt;100 : 0 부터 99 까지</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Half-Open Range Operator</span></span><br><span class="line"><span class="number">0</span>..&lt;<span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> names = [<span class="string">"Anna"</span>, <span class="string">"Alex"</span>, <span class="string">"Brian"</span>, <span class="string">"Jack"</span>]</span><br><span class="line"><span class="keyword">let</span> <span class="built_in">count</span> = names.<span class="built_in">count</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;<span class="built_in">count</span> &#123;   <span class="comment">// 0,1,2,3</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Person (i + 1) is called (names[i])"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>One-Sided Ranges<br>
+Ex) 1… , …100, …&lt;100</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//               0       1        2       3</span></span><br><span class="line"><span class="comment">//let names = ["Anna", "Alex", "Brian", "Jack"]</span></span><br><span class="line">names[<span class="number">2</span>...]		<span class="comment">// ["Brian", "Jack"]</span></span><br><span class="line">names[...<span class="number">2</span>]		<span class="comment">// ["Anna", "Alex", "Brian"]</span></span><br><span class="line">names[..&lt;<span class="number">2</span>]		<span class="comment">// [“Anna”, “Alex”]</span></span><br></pre></td></tr></table></figure>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/05/17/컴퓨터 기초/메모리구조/" data-toggle="tooltip" data-placement="top" title="[컴퓨터 기초] 메모리구조 (Memory Structure)">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/18/hexo-theme-beantech/" data-toggle="tooltip" data-placement="top" title="[Hexo] Theme BeanTech">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/05/16/Swift/The Basic/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/05/16/Swift/The Basic/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

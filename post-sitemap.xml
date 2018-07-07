@@ -7,6 +7,214 @@
     </url>
 
     <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/06/iOS/UIImagePickerController/</loc>
+        <lastmod>2018-07-07T17:17:28.001Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/06/iOS/Shortcuts/</loc>
+        <lastmod>2018-07-07T16:19:57.951Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/05/iOS/TabbarController/</loc>
+        <lastmod>2018-07-07T16:18:22.902Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/05/iOS/NotificationCenter/</loc>
+        <lastmod>2018-07-07T16:17:22.025Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/04/iOS/DocumentInteraction/</loc>
+        <lastmod>2018-07-07T16:15:32.108Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/02/iOS/App%20Sandbox/</loc>
+        <lastmod>2018-07-07T16:14:26.425Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/06/07/iOS/AutoLayout/</loc>
+        <lastmod>2018-07-07T15:59:24.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/06/07/iOS/Delegate/</loc>
+        <lastmod>2018-07-07T15:53:38.761Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/06/05/iOS/Code%20Snippets/</loc>
+        <lastmod>2018-07-07T15:51:56.476Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/06/04/iOS/UIViewController/</loc>
+        <lastmod>2018-07-07T15:51:00.518Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/29/iOS/UI%20Guide/</loc>
+        <lastmod>2018-07-07T15:47:27.682Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/28/iOS/AppLifeCycle/</loc>
+        <lastmod>2018-07-07T15:45:47.635Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/28/iOS/Hello%20Xcode/</loc>
+        <lastmod>2018-07-07T15:42:25.729Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/01/Swift/%ED%81%B4%EB%A1%9C%EC%A0%80/</loc>
+        <lastmod>2018-07-07T15:36:37.745Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/06/05/iOS/UserDefaults/</loc>
+        <lastmod>2018-07-07T15:34:20.411Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/06/05/iOS/Singleton/</loc>
+        <lastmod>2018-07-07T15:33:42.328Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/25/Swift/%ED%83%80%EC%9E%85%EC%B2%B4%ED%81%AC(TypeCheck)/</loc>
+        <lastmod>2018-07-07T15:28:19.262Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/24/Swift/Initializer/</loc>
+        <lastmod>2018-07-07T14:55:58.655Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/23/Swift/%EC%98%B5%EC%85%94%EB%84%90/</loc>
+        <lastmod>2018-07-07T14:53:48.013Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/23/Swift/%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0/</loc>
+        <lastmod>2018-07-07T14:52:37.634Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/21/Swift/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D(OOP)/</loc>
+        <lastmod>2018-07-07T14:50:42.032Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/21/Swift/%EC%A0%91%EA%B7%BC%EC%A0%9C%EC%96%B4/</loc>
+        <lastmod>2018-07-07T14:38:51.288Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/20/Swift/%EA%B5%AC%EC%A1%B0%EC%B2%B4%EC%99%80%20%ED%81%B4%EB%9E%98%EC%8A%A4/</loc>
+        <lastmod>2018-07-07T13:30:44.022Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/19/Swift/%EC%97%B4%EA%B1%B0%ED%98%95/</loc>
+        <lastmod>2018-07-07T13:30:41.712Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/16/Swift/The%20Basic/</loc>
+        <lastmod>2018-07-07T13:30:36.219Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/2018/05/17/%EC%BB%B4%ED%93%A8%ED%84%B0%20%EA%B8%B0%EC%B4%88/%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B5%AC%EC%A1%B0/</loc>
+        <lastmod>2018-07-07T13:10:32.505Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jinShine.github.io/jinShine/2017/03/18/hexo-theme-beantech/</loc>
         <lastmod>2017-09-23T12:40:20.000Z</lastmod>
         <changefreq>weekly</changefreq>

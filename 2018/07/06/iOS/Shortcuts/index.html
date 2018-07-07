@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [iOS] Shortcuts - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/07/06/iOS/Shortcuts/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/iOS-bg.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                            
+                        </div>
+                        <h1>[iOS] Shortcuts</h1>
+                        <h2 class="subheading">Xcode에서 사용하는 팁과 단축키에 대해 알아보겠습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-07-06
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>오늘은 Xcode를 사용하면서 유용한 팁이나 단축키에 관해 알아 보겠습니다.<br>
+너무 많아서 하나씩 해보면서 몸에 익혀야겠어요.</p>
+<h2><span id="symbols">Symbols</span></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Command</td>
+<td>⌘</td>
+</tr>
+<tr>
+<td>Control</td>
+<td>⌃</td>
+</tr>
+<tr>
+<td>Option</td>
+<td>⌥</td>
+</tr>
+<tr>
+<td>Shift</td>
+<td>⇧</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>↩</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>⇧</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>⌫</td>
+</tr>
+<tr>
+<td>ESC</td>
+<td>⎋</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="기본-단축키">기본 단축키</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+⇧+ 0</td>
+<td>개발자 문서</td>
+</tr>
+<tr>
+<td>⌘+ ,</td>
+<td>설정</td>
+</tr>
+<tr>
+<td>⎋</td>
+<td>자동 완성 리스트</td>
+</tr>
+<tr>
+<td>⌘+ L</td>
+<td>지정 라인으로 이동</td>
+</tr>
+<tr>
+<td>⌘+ Z</td>
+<td>되돌리기 (Undo)</td>
+</tr>
+<tr>
+<td>⌘+⇧+ Z</td>
+<td>다시하기 (Redo)</td>
+</tr>
+<tr>
+<td>⌃+I</td>
+<td>들여쓰기 조정</td>
+</tr>
+<tr>
+<td>⌘+ N</td>
+<td>새 파일 만들기</td>
+</tr>
+<tr>
+<td>⌘+⇧+ N</td>
+<td>새 프로젝트 만들기</td>
+</tr>
+<tr>
+<td>⌘+ Q</td>
+<td>Xcode 종료</td>
+</tr>
+<tr>
+<td>⌘+ /</td>
+<td>주석 처리 / 해제</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="assistant-version-editor">Assistant / Version Editor</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+⌥+↩</td>
+<td>보조 에디터 열기</td>
+</tr>
+<tr>
+<td>⌘+⌥+⇧+↩</td>
+<td>버전 에디터 열기</td>
+</tr>
+<tr>
+<td>⌘+↩</td>
+<td>기본 에디터 모드 (보조 / 버전 에디터 닫기)</td>
+</tr>
+<tr>
+<td>⌘ + ⇧ + O 이후 ⌥ + ↩</td>
+<td>지정 파일 보조 에디터로 열기</td>
+</tr>
+<tr>
+<td>⌃+ `</td>
+<td>다음 에디터로 포커스 이동</td>
+</tr>
+<tr>
+<td>⌃+⇧+ `</td>
+<td>이전 에디터로 포커스 이동</td>
+</tr>
+<tr>
+<td>⌘+ J</td>
+<td>에디터 포커스 이동 선택 화면</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="tap-window">Tap / Window</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+ T</td>
+<td>새탭</td>
+</tr>
+<tr>
+<td>⌘+ W</td>
+<td>탭 닫기</td>
+</tr>
+<tr>
+<td>⌘+⇧+ [ / ]</td>
+<td>탭 좌우로 이동</td>
+</tr>
+<tr>
+<td>⌘+⇧+ T</td>
+<td>새 윈도우</td>
+</tr>
+<tr>
+<td>⌘+⇧+ W</td>
+<td>윈도우 닫기</td>
+</tr>
+<tr>
+<td>⌘+⌃+←/→</td>
+<td>이전 / 이후에 사용했던 파일로 이동</td>
+</tr>
+<tr>
+<td>⌘+⌃+↑/↓</td>
+<td>Counterpart 로 이동</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="delete">Delete</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+⌫</td>
+<td>커서 위치부터 행의 시작까지 삭제</td>
+</tr>
+<tr>
+<td>⌘ + fn + ⌫</td>
+<td>커서 위치부터 행의 끝까지 삭제</td>
+</tr>
+<tr>
+<td>⌃+ K</td>
+<td>커서 위치부터 단락(Paragrahp)의 끝까지 삭제</td>
+</tr>
+<tr>
+<td>⌥+⌫</td>
+<td>뒤쪽 방향으로 단어 단위 삭제</td>
+</tr>
+<tr>
+<td>⌥ + fn + ⌫</td>
+<td>앞쪽 방향으로 단어 단위 삭제</td>
+</tr>
+<tr>
+<td>⌃+⌫</td>
+<td>뒤쪽 방향으로 subword 단위 삭제 (대소문자로 구분)</td>
+</tr>
+<tr>
+<td>⌃ + fn + ⌫</td>
+<td>앞쪽 방향으로 subword 단위 삭제 (대소문자로 구분)</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="appearance">Appearance</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+ 0</td>
+<td>Navigator Show / Hide</td>
+</tr>
+<tr>
+<td>⌘+⌥+ 0</td>
+<td>Utilities Show / Hide</td>
+</tr>
+<tr>
+<td>⌘+⇧+ Y</td>
+<td>Debug Area Show / Hide</td>
+</tr>
+<tr>
+<td>⌘+⌥+ T</td>
+<td>Tool Bar Show / Hide</td>
+</tr>
+<tr>
+<td>⌘+⌥+←/→</td>
+<td>코드 접기 / 펼치기</td>
+</tr>
+<tr>
+<td>⌘+ + / -</td>
+<td>폰트 크기 + / -</td>
+</tr>
+<tr>
+<td>⌘+⌃+ 0</td>
+<td>폰트 크기 기본값</td>
+</tr>
+<tr>
+<td>⌘+ [ / ]</td>
+<td>들여쓰기 좌 / 우로 조정</td>
+</tr>
+<tr>
+<td>⌃+ L</td>
+<td>커서가 있는 라인을 화면 가운데로 이동</td>
+</tr>
+<tr>
+<td>⌘+⌥+ 2</td>
+<td>Show Quick Help Inspector)</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="text">Text</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+ F</td>
+<td>현재 파일 내 검색</td>
+</tr>
+<tr>
+<td>⌘+⇧+ F</td>
+<td>지정 범위 내 검색 (기본값 : 프로젝트 전체)</td>
+</tr>
+<tr>
+<td>⌘+⌥+ F</td>
+<td>현재 파일 내 치환</td>
+</tr>
+<tr>
+<td>⌘+⌥+⇧+ F</td>
+<td>지정 범위 내 치환 (기본값 : 프로젝트 전체)</td>
+</tr>
+<tr>
+<td>⌘+⌥+ [ / ]</td>
+<td>위 / 아래 방향 라인 스위칭</td>
+</tr>
+<tr>
+<td>⌘+ E</td>
+<td>현재 선택된 텍스트 블럭을 검색용 텍스트로 지정</td>
+</tr>
+<tr>
+<td>⌘+ G</td>
+<td>현재 파일에서 검색용 텍스트와 일치하는 다음 문자열로 이동</td>
+</tr>
+<tr>
+<td>⌘+⇧+ G</td>
+<td>현재 파일에서 검색용 텍스트와 일치하는 이전 문자열로 이동</td>
+</tr>
+<tr>
+<td>⌘+⌃+ E</td>
+<td>범위 내 동일 키워드(변수 등) 치환 (Edit All in Scope)</td>
+</tr>
+<tr>
+<td>⌃+ /</td>
+<td>다음 플레이스홀더로 이동</td>
+</tr>
+<tr>
+<td>⌃+ ?</td>
+<td>이전 플레이스홀더로 이동</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="product">Product</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+ R</td>
+<td>Build and Run</td>
+</tr>
+<tr>
+<td>⌘+ U</td>
+<td>Build and Test</td>
+</tr>
+<tr>
+<td>⌘+ I</td>
+<td>Build and Run with Instruments</td>
+</tr>
+<tr>
+<td>⌘+⇧+ B</td>
+<td>Build with static analyzer</td>
+</tr>
+<tr>
+<td>⌘+⇧+ K</td>
+<td>Clean</td>
+</tr>
+<tr>
+<td>⌘+ .</td>
+<td>작업 중지</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="debugging">Debugging</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+ ‘ / “</td>
+<td>다음 / 이전 이슈로 이동</td>
+</tr>
+<tr>
+<td>⌘+⌥+⌃+ F</td>
+<td>수정 가능한 모든 이슈 자동 수정</td>
+</tr>
+<tr>
+<td>⌘+ K</td>
+<td>콘솔창 텍스트 Clear</td>
+</tr>
+<tr>
+<td>⌘+ \</td>
+<td>브레이크 포인트 설정 / 해제</td>
+</tr>
+<tr>
+<td>⌘+ Y</td>
+<td>브레이크 포인트 전체 활성화 / 비활성화</td>
+</tr>
+<tr>
+<td>⌘+⌃+ Y</td>
+<td>Pause / Continue</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>tep Over (다음 라인으로 이동, 메서드 무시)</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Step Into (다음 라인으로 이동, 메서드가 있을 경우 내부로 진입)</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Step Out (진입한 메서드에서 빠져나옴)</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="etc">ETC</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+⌥+ /</td>
+<td>마크업 문서 주석</td>
+</tr>
+<tr>
+<td>⌘+⌥+ N</td>
+<td>Build and Test</td>
+</tr>
+<tr>
+<td>⌘+⌥+ A</td>
+<td>파일 추가</td>
+</tr>
+<tr>
+<td>⌘ + ⌃ + Space</td>
+<td>이모지 &amp; 기호</td>
+</tr>
+<tr>
+<td>⌘+⇧+ 1</td>
+<td>Xcode Launch</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="storyboard">Storyboard</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+ D</td>
+<td>오브젝트 복제</td>
+</tr>
+<tr>
+<td>⌥ + Drag</td>
+<td>오브젝트 복제</td>
+</tr>
+<tr>
+<td>오브젝트 배치 시 ⌘</td>
+<td>현재 뷰 계층 유지</td>
+</tr>
+<tr>
+<td>⌃ + Drag</td>
+<td>IBOutlet / IBAction / Constraint 연결</td>
+</tr>
+<tr>
+<td>⌃ + Drag 이후 ⇧ + Click</td>
+<td>Constraint 다중 적용</td>
+</tr>
+<tr>
+<td>⇧ + R Click / ⇧ + ⌃ + L Click</td>
+<td>중첩되어 있는 뷰 전체 표시</td>
+</tr>
+<tr>
+<td>⌥ + Mouse-Wheel</td>
+<td>줌 인, 줌 아웃</td>
+</tr>
+</tbody>
+</table>
+<h2><span id="simulator">Simulator</span></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘+⇧+ H</td>
+<td>홈키</td>
+</tr>
+<tr>
+<td>⌘+ L</td>
+<td>화면 락 (전원 버튼)</td>
+</tr>
+<tr>
+<td>⌘+ S</td>
+<td>스크린샷 저장</td>
+</tr>
+<tr>
+<td>⌘+ W</td>
+<td>지정 시뮬레이터 종료</td>
+</tr>
+<tr>
+<td>⌘+ K</td>
+<td>키보드 토글</td>
+</tr>
+<tr>
+<td>⌘+⇧+ K</td>
+<td>하드웨어 키보드 연결</td>
+</tr>
+<tr>
+<td>⌘+←/→</td>
+<td>디바이스 방향 회전</td>
+</tr>
+<tr>
+<td>⌘+↑/↓</td>
+<td>Volume 조절</td>
+</tr>
+<tr>
+<td>⌘+ 1</td>
+<td>Physical Size</td>
+</tr>
+</tbody>
+</table>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/07/06/iOS/UIImagePickerController/" data-toggle="tooltip" data-placement="top" title="[iOS] UIImagePickerController">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/05/iOS/TabbarController/" data-toggle="tooltip" data-placement="top" title="[iOS] TabbarController">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/07/06/iOS/Shortcuts/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/07/06/iOS/Shortcuts/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
