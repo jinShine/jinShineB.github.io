@@ -7,13 +7,6 @@
     </url>
 
     <url>
-        <loc>https://jinShine.github.io/jinShine/categories/%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B8%B0%EC%B4%88/</loc>
-        <lastmod>2018-07-07T13:10:32.505Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jinShine.github.io/jinShine/categories/Swift/</loc>
         <lastmod>2018-07-07T15:36:37.745Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,6 +16,20 @@
     <url>
         <loc>https://jinShine.github.io/jinShine/categories/iOS/</loc>
         <lastmod>2018-07-07T17:17:28.001Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/categories/MongoDB/</loc>
+        <lastmod>2018-07-07T17:29:39.532Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jinShine.github.io/jinShine/categories/%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B8%B0%EC%B4%88/</loc>
+        <lastmod>2018-07-08T03:54:10.219Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
