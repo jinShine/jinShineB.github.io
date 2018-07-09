@@ -213,6 +213,43 @@
 
 <div class="post-preview">
 
+    <a href="/2018/06/07/iOS/AutoLayout/">
+        <h2 class="post-title">
+            [iOS] 오토레이아웃(AutoLayout)과 Layout 개념
+        </h2>
+        <h3 class="post-subtitle">
+            오토레이아웃(AutoLayout)과 Layout개념들에 대해 알아 보겠습니다.
+        </h3>
+        <div class="post-content-preview">
+            AutoLayout
+
+Autolayout의 개념들에 관해 알아 보겠습니다.
+
+AutoLayout은 뷰에 주어진 제약조건에 따라 뷰의 크기와 위치를 동적으로 계산해 배치하느것으로,
+외부 또는 내부의 변화에 동적으로 반응하여 유저 인터페이스 구성합니다.
+
+iOS에선 이러한 layout을 구성할때 3가지의 주요 접근 방식이 있습니다.
+
+Frame 기반의 프......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-06-07
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/06/07/iOS/Delegate/">
         <h2 class="post-title">
             [iOS] 델리게이트(Delegate)
@@ -319,22 +356,17 @@ Tuple/Row은 MongoDB에선 Docum......
 
 <div class="post-preview">
 
-    <a href="/2018/06/05/iOS/UserDefaults/">
+    <a href="/2018/06/05/iOS/Singleton/">
         <h2 class="post-title">
-            [iOS] UserDefaults
+            [iOS] 싱글턴(Singleton) in Swift
         </h2>
         <h3 class="post-subtitle">
-            UserDefaults에 대해 알아보겠습니다.
+            싱글턴(Singleton)에 대해 알아보겠습니다.
         </h3>
         <div class="post-content-preview">
-            UserDefaults?
-
-iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
-간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
-
-보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
-UserDefaults는 싱글턴이고 standard로 관리를 하고,
-key-value 쌍으......
+            Singleton패턴이란?
+싱글톤 패턴(Singleton Pattern) 을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용합니다.이와 같은 디자인 유형을 싱글톤 패턴이라고 한다.
+고정된 메모리 영역을 얻으면서 한번의 인스턴스를 사용하기 ......
         </div>
     </a>
     
@@ -354,17 +386,22 @@ key-value 쌍으......
 
 <div class="post-preview">
 
-    <a href="/2018/06/05/iOS/Singleton/">
+    <a href="/2018/06/05/iOS/UserDefaults/">
         <h2 class="post-title">
-            [iOS] 싱글턴(Singleton) in Swift
+            [iOS] UserDefaults
         </h2>
         <h3 class="post-subtitle">
-            싱글턴(Singleton)에 대해 알아보겠습니다.
+            UserDefaults에 대해 알아보겠습니다.
         </h3>
         <div class="post-content-preview">
-            Singleton패턴이란?
-싱글톤 패턴(Singleton Pattern) 을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용합니다.이와 같은 디자인 유형을 싱글톤 패턴이라고 한다.
-고정된 메모리 영역을 얻으면서 한번의 인스턴스를 사용하기 ......
+            UserDefaults?
+
+iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
+간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
+
+보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
+UserDefaults는 싱글턴이고 standard로 관리를 하고,
+key-value 쌍으......
         </div>
     </a>
     
@@ -534,40 +571,6 @@ pt로 나타낸다
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/05/28/iOS/AppLifeCycle/">
-        <h2 class="post-title">
-            [iOS] 앱의 생명주기(App Life Cycle)와 앱의 구조(App Structure)
-        </h2>
-        <h3 class="post-subtitle">
-            앱 생명주기(App Life Cyle)와 앱의 구조(App Structure)에 대해 알아 보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            앱의 실행과정
-
-main 함수가 실행
-main 함수는 UIApplicationMain함수를 호출
-UIApplicationMain함수는 앱의 본체에 해당하는 객체인 UIApplication 객체를 생성한다.
-nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에 기록된 정보를 참고하여 그외에 필요한 데이터를 로드한다.
-앱 델리게이트 객......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-05-28
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -612,7 +615,7 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
             
         
             
-            <a href="/tags/#Swift" title="Swift" rel="10">Swift</a>
+            <a href="/tags/#Swift" title="Swift" rel="11">Swift</a>
             
         
             
@@ -668,6 +671,10 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
     <ul>
       
         <li>
+          <a href="/2018/07/09/Swift/Error Handling/">[Swift] Error Handling</a>
+        </li>
+      
+        <li>
           <a href="/2018/07/08/iOS/ARC (Memory Manager)/">[iOS] ARC(Automatic Reference Counting)</a>
         </li>
       
@@ -683,10 +690,6 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
           <a href="/2018/07/05/iOS/TabbarController/">[iOS] TabbarController</a>
         </li>
       
-        <li>
-          <a href="/2018/07/05/iOS/NotificationCenter/">[iOS] NotificationCenter</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -696,7 +699,7 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">1</span></li></ul>
     </div>
 
         <hr>
@@ -704,7 +707,7 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">3월 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
     </div>
 
         <hr>
