@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [iOS] GCD(Grand Central Dispatch) - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/07/09/iOS/GCD(Grand Central Dispatch)/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/iOS-bg.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                            
+                        </div>
+                        <h1>[iOS] GCD(Grand Central Dispatch)</h1>
+                        <h2 class="subheading">GCD(Grand Central Dispatch) 개념에 대해 알아 보겠습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-07-09
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>GCD의 개념에 대해 알아 보겠습니다.</p>
+<p>초기에는 마이크로 프로세서의 clock 속도를 높이는 방식으로 연산 속도를 높였습니다.<br>
+그 후 점점 증가하는 전력 소비와 발생하는 열로 인해 단일 프로세서의 clock 속도 증가에 한계를 맞게 되었으며, 이는 특히 모바일에서 영향을 크게 받게 되었습니다. 따라서 CPU 벤더들은 단일 CPU 의 클럭 속도를 개선하는 대신 여러 개의 CPU 를 탑재하는 형태로 효율을 높이는 것에 초점을 맞추게 되었고, 프로세서의 클럭 속도가 빨라지면서 자연스럽게 소프트웨어도 빨라지던 예전과 달리 멀티 코어 프로세서에서는 멀티 프로세서에게 어떻게 잘 프로그램의 동작을 배분하는 지가 중요해졌습니다.</p>
+<p>GCD 이전에는 멀티 스레딩을 위해 Thread 와 OperationQueue 등의 클래스를 사용했는데, Thread 는 복잡하고 Critical Section 등을 이용한 Lock 을 관리하기 까다로웠고, OperationQueue는 GCD에 비해 무겁고 Boilerplate 코드들이 많이 필요한 문제가 있습니다.<br>
+GCD (Grand Central Dispatch)는 멀티 코어 프로세서 시스템에 대한 응용 프로그램 지원을 최적화하기 위해 Apple에서 개발한 기술로 스레드 관리와 실행에 대한 책임을 어플리케이션 레벨에서 운영체제 레벨로 넘겨버렸습니다. 작업단위는 Block(Swift에선 클로저)이라 불리며, DispatchQueue가 이 Block들을 관리합니다.<br>
+GCD 는 각 어플리케이션에서 생성된 DispatchQueue 를 읽는 멀티코어 실행 엔진을 가지고 있으며, 이것이 Queue에 등록된 각 작업을 꺼내 스레드에 할당하고 개발자는 내부 동작을 자세히 알 필요 없이 Queue 에 작업을 넘기기만 하면 되서, Thread 를 직접 생성하고 관리하는 것에 비해 관리 용이성과 이식성, 성능 증가하게 되었습니다.</p>
+<p><strong>애플 공식 문서에서도 Thread 클래스 대신 GCD 사용을 권장하고 있습니다.</strong></p>
+<h5><span id="gcd-의-장점">GCD 의 장점</span></h5>
+<ul>
+<li>reduces the memory penalty for storing thread stacks in the app’s memory space.</li>
+<li>eliminates the code needed to create and configure your threads.</li>
+<li>eliminates the code needed to manage and schedule work on threads.</li>
+<li>simplifies the code</li>
+</ul>
+<h2><span id="dispatchqueue">DispatchQueue</span></h2>
+<ul>
+<li>GCD는 앱이 블록 객체 형태로 작업을 전송할 수 있는 FIFO 대기열(Queue)을 제공하고 관리합니다.</li>
+<li>Queue에 전달된 작업은 시스템이 전적으로 관리하는 스레드 풀(a pool of threads)에서 실행됩니다.</li>
+<li>DispatchQueue는 2개의 타입( Serial / Concurrent )으로 구분되며 둘 모두 FIFO 순서로 처리합니다.</li>
+<li>앱을 실행하면 시스템이 자동으로 메인스레드 위에서 동작하는 Main 큐(Serial Queue)를 만들어서 작업을 수행하고, 그 외에 추가적으로 여러 개의 Global 큐(Cuncurrent Queue)를 만들어서 큐를 관리합니다.</li>
+<li>각 작업은 동기(sync) 방식과 비동기(async) 방식으로 실행 가능하지만 Main 큐에서는 async 만 사용 가능</li>
+</ul>
+<h3><span id="serial-queue">Serial Queue</span></h3>
+<p><img src="https://i.imgur.com/CCNk1fj.png" alt="Imgur"><br>
+Serial Queue는 큐에 쿠가된 순서대로 한번에 하나의 task를 실행합니다.</p>
+<h3><span id="concurrent-queue">Concurrent Queue</span></h3>
+<p><img src="https://i.imgur.com/DzZWIFn.png" alt="Imgur"><br>
+Concurrent Queue는 동시에 하나 이상의 task를 실행하지만 큐에 추가됬을시에 추가된 순서대로 작업을 계속 진행합니다. 위의 사진을 보면 동시에 진행하고 있습니다만 동시에 진행되는것이 아닙니다!</p>
+<h5><span id="concurrency동시성-vs-parallelism병렬성"><strong>Concurrency(동시성) vs Parallelism(병렬성)</strong></span></h5>
+<p><img src="https://i.imgur.com/UoR30Ms.png" alt="Imgur"></p>
+<p>병렬성(Parallelism)</p>
+<blockquote>
+<p>물리적인 용어<br>
+실제로 작업이 동시에 처리되는 것<br>
+멀티 코어에서 멀티 스레드를 동작시키는 방식<br>
+한 개 이상의 스레드를 포함하는 각 코어들이 동시에 실행되는 성질<br>
+병렬성은 데이터 병렬성(Data parallelism)과 작업 병렬성(Task parallelism)으로 구분</p>
+</blockquote>
+<p>동시성(Concurrency)</p>
+<blockquote>
+<p>논리적인 용어<br>
+동시에 실행되는 것처럼 보이는 것입니다.<br>
+싱글 코어에서 멀티 스레드를 동작시키기 위한 방식<br>
+하지만 멀티 코어에서도 동시성은 사용 가능함<br>
+멀티 태스킹을 위해 여러 개의 스레드가 번갈아가면서 실행되는 성질<br>
+동시성을 이용한 싱글 코어의 멀티 태스킹은 각 스레드들이 병렬적으로 실행되는 것처럼 보이지만 사실은 번갈아가면서 조금씩 실행되고 있는 것</p>
+</blockquote>
+<h3><span id="사용법">사용법</span></h3>
+<blockquote>
+<p>System이 제공하는 Queue에는 Main과 Global이 있습니다.</p>
+</blockquote>
+<ul>
+<li>
+<p>Main</p>
+<ul>
+<li>UI와 관련된 작업은 모두 main큐를 통해서 수행하며 Serial Queue에 해당됩니다.</li>
+<li>MainQueue를 sync메서드로 동작시키면 Dead Lock 상태에 빠집니다.  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DispatchQueue</span>.main.async&#123; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>Global</p>
+<ul>
+<li>UI를 제외한 작업에서 사용하며 Concurrent Queue에 해당합니다.</li>
+<li>sync와 async메서드 모두 사용 가능합니다.</li>
+<li>Qos클래스를 지정하여 우선순위 설정이 가능합니다.  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DispatchQueue</span>.global().async&#123; &#125;</span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .utility).sync&#123; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5><span id="qosquality-of-service"><strong>QoS(Quality of service)</strong></span></h5>
+<blockquote>
+<p>시스템은 QoS 정보를 통해 스케쥴링, CPU 및 I/O 처리량, 타이머 대기 시간 등의 우선 순위를 조정<br>
+총 6개의 QoS 클래스가 있으며 4개의 주요 유형와 다른 2 개의 특수 유형으로 구분 가능<br>
+[낮은순] unspecified -&gt; background -&gt; utility -&gt; default -&gt; userInitiated -&gt; userInteractive [높은순]</p>
+</blockquote>
+<h6><span id="primary-qos-classes">Primary QoS classes</span></h6>
+<blockquote>
+<p>우선 순위가 높을 수록 더 빨리 수행되고 더 많은 전력을 소모<br>
+수행 작업에 적절한 QoS 클래스를 지정해주어야 더 반응성이 좋아지며, 효율적인 에너지 사용이 가능</p>
+</blockquote>
+<ul>
+<li>User Interactive
+<ul>
+<li>즉각 반응해야 하는 작업으로 반응성 및 성능에 중점</li>
+<li>main thread 에서 동작하는 인터페이스 새로 고침, 애니메이션 작업 등 즉각 수행되는 유저와의 상호작용 작업에 할당</li>
+</ul>
+</li>
+<li>User Initiated
+<ul>
+<li>몇 초 이내의 짧은 시간 내 수행해야 하는 작업으로 반응성 및 성능에 중점</li>
+<li>문서를 열거나, 버튼을 클릭해 액션을 수행하는 것 처럼 빠른 결과를 요구하는 유저와의 상호작용 작업에 할당</li>
+</ul>
+</li>
+<li>Utility
+<ul>
+<li>
+<p>수초에서 수분에 걸쳐 수행되는 작업으로 반응성, 성능, 그리고 에너지 효율성 간에 균형을 유지하는데 중점</p>
+</li>
+<li>
+<p>데이터를 읽어들이거나 다운로드 하는 등 작업을 완료하는데 어느 정도 시간이 걸릴 수 있으며 보통 진행 표시줄로 표현 Background</p>
+</li>
+<li>
+<p>수분에서 수시간에 걸쳐 수행되는 작업으로 에너지 효율성에 중점. NSOperation 클래스 사용 시 기본 값</p>
+</li>
+<li>
+<p>background에서 동작하며 색인 생성, 동기화, 백업 같이 사용자가 볼 수 없는 작업에 할당</p>
+</li>
+<li>
+<p>저전력 모드에서는 네트워킹을 포함하여 백그라운드 작업은 일시 중지</p>
+</li>
+</ul>
+</li>
+</ul>
+<h6><span id="special-qos-classes">Special QoS Classes</span></h6>
+<blockquote>
+<p>일반적으로, 별도로 사용할 일이 없는 특수 유형의 QoS</p>
+</blockquote>
+<ul>
+<li>Default
+<ul>
+<li>QoS 를 별도로 지정하지 않으면 기본값으로 사용되는 형태이며 User Initiated 와 Utility 의 중간 레벨</li>
+<li>GCD global queue 의 기본 동작 형태</li>
+</ul>
+</li>
+<li>Unspecified
+<ul>
+<li>QoS 정보가 없으므로 시스템이 QoS 를 추론해야 한다는 것을 의미</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***************************************</span></span><br><span class="line"><span class="comment">* Main   : UI와 관련된 작업</span></span><br><span class="line"><span class="comment">* Global : UI를 제외한 작업에서 사용</span></span><br><span class="line"><span class="comment">****************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/***************************************</span></span><br><span class="line"><span class="comment"> 1번이 끝나고 2번이 동작하게된다.</span></span><br><span class="line"><span class="comment"> ****************************************/</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global(qos: .userInitiated).async &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1번</span></span><br><span class="line">    <span class="comment">// 위의 작업이 끝나야만</span></span><br><span class="line">    <span class="keyword">for</span> <span class="number">_</span> <span class="keyword">in</span> <span class="number">0</span>...<span class="number">900_000_000</span> &#123;</span><br><span class="line">        <span class="number">_</span> = <span class="number">1</span> + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2번</span></span><br><span class="line">    <span class="comment">//밑에 스레드가 실행된다.</span></span><br><span class="line">    <span class="comment">//main스레스든 UI작업을 할때 사용된다.</span></span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"Start"</span>)</span><br><span class="line">        <span class="keyword">self</span>.testView.frame.origin.y += <span class="number">250</span></span><br><span class="line">        <span class="keyword">self</span>.view.backgroundColor = .yellow</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***************************************</span></span><br><span class="line"><span class="comment"> 1번과 2번이 따로 동작하게된다.</span></span><br><span class="line"><span class="comment"> ****************************************/</span></span><br><span class="line"><span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">    <span class="comment">//1번</span></span><br><span class="line">    <span class="keyword">for</span> <span class="number">_</span> <span class="keyword">in</span> <span class="number">0</span>...<span class="number">900_000_000</span> &#123;</span><br><span class="line">        <span class="number">_</span> = <span class="number">1</span> + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//2번</span></span><br><span class="line"><span class="keyword">self</span>.view.backgroundColor = .magenta</span><br></pre></td></tr></table></figure>
+<h5><span id="참고">참고</span></h5>
+<blockquote>
+<p>Dispatch Framework<br>
+<a href="https://developer.apple.com/documentation/dispatch" target="_blank" rel="noopener">https://developer.apple.com/documentation/dispatch</a></p>
+<p>swift/stdlib/public/SDK/Dispatch<br>
+<a href="https://github.com/apple/swift/tree/master/stdlib/public/SDK/Dispatch" target="_blank" rel="noopener">https://github.com/apple/swift/tree/master/stdlib/public/SDK/Dispatch</a></p>
+<p>Concurrency Programming Guide<br>
+<a href="https://developer.apple.com/library/content/documentation/General/Conceptual/" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/General/Conceptual/</a> ConcurrencyProgrammingGuide</p>
+<p>dispatch_block_flags_t<br>
+<a href="https://developer.apple.com/documentation/dispatch/dispatch_block_flags_t?language=objc" target="_blank" rel="noopener">https://developer.apple.com/documentation/dispatch/dispatch_block_flags_t?language=objc</a></p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/09/Swift/Error Handling/" data-toggle="tooltip" data-placement="top" title="[Swift] Error Handling">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/07/09/iOS/GCD(Grand Central Dispatch)/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/07/09/iOS/GCD(Grand Central Dispatch)/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

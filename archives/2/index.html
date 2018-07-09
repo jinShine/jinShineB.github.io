@@ -213,6 +213,50 @@
 
 <div class="post-preview">
 
+    <a href="/2018/06/10/MongoDB/명령어/">
+        <h2 class="post-title">
+            [MongoDB] 기본적인 명령어
+        </h2>
+        <h3 class="post-subtitle">
+            기본적인 명령어에 대해 알아보겠습니다.
+        </h3>
+        <div class="post-content-preview">
+            기본 명령어
+
+들어가기에 앞서, mongo Shell에서 쓰이는 문법은 기본적으로 Javascript로 되어 있습니다.
+서버실행
+
+mongod
+
+서버 접속
+
+mongo
+
+서버 접속 까지 완료해줍니다.
+DB 생성
+use DATABASE_NAME명령어를 통해서 Database를 생성할 수 있습니다.
+
+&gt; use testDB 
+switched to d......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-06-10
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#MongoDB" title="MongoDB">MongoDB</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/06/07/iOS/AutoLayout/">
         <h2 class="post-title">
             [iOS] 오토레이아웃(AutoLayout)과 Layout 개념
@@ -356,17 +400,22 @@ Tuple/Row은 MongoDB에선 Docum......
 
 <div class="post-preview">
 
-    <a href="/2018/06/05/iOS/Singleton/">
+    <a href="/2018/06/05/iOS/UserDefaults/">
         <h2 class="post-title">
-            [iOS] 싱글턴(Singleton) in Swift
+            [iOS] UserDefaults
         </h2>
         <h3 class="post-subtitle">
-            싱글턴(Singleton)에 대해 알아보겠습니다.
+            UserDefaults에 대해 알아보겠습니다.
         </h3>
         <div class="post-content-preview">
-            Singleton패턴이란?
-싱글톤 패턴(Singleton Pattern) 을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용합니다.이와 같은 디자인 유형을 싱글톤 패턴이라고 한다.
-고정된 메모리 영역을 얻으면서 한번의 인스턴스를 사용하기 ......
+            UserDefaults?
+
+iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
+간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
+
+보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
+UserDefaults는 싱글턴이고 standard로 관리를 하고,
+key-value 쌍으......
         </div>
     </a>
     
@@ -386,22 +435,17 @@ Tuple/Row은 MongoDB에선 Docum......
 
 <div class="post-preview">
 
-    <a href="/2018/06/05/iOS/UserDefaults/">
+    <a href="/2018/06/05/iOS/Singleton/">
         <h2 class="post-title">
-            [iOS] UserDefaults
+            [iOS] 싱글턴(Singleton) in Swift
         </h2>
         <h3 class="post-subtitle">
-            UserDefaults에 대해 알아보겠습니다.
+            싱글턴(Singleton)에 대해 알아보겠습니다.
         </h3>
         <div class="post-content-preview">
-            UserDefaults?
-
-iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
-간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
-
-보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
-UserDefaults는 싱글턴이고 standard로 관리를 하고,
-key-value 쌍으......
+            Singleton패턴이란?
+싱글톤 패턴(Singleton Pattern) 을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용합니다.이와 같은 디자인 유형을 싱글톤 패턴이라고 한다.
+고정된 메모리 영역을 얻으면서 한번의 인스턴스를 사용하기 ......
         </div>
     </a>
     
@@ -533,44 +577,6 @@ N......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/05/29/iOS/UI Guide/">
-        <h2 class="post-title">
-            [iOS] iOS UI Guide 개념
-        </h2>
-        <h3 class="post-subtitle">
-            UI에 필요한 개념들에 대해 알아 보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            Resolution(해상도)
-
-
-iOS, MAC등 constraint나 constant값을 줄 때의 숫자값들은 모두 포인트단위입니다.
-플러스+ 종류는 다운스케일이 되어 렌더링 됩니다.(물리적인에 비율에 맞추기 위해 다운스케일 조정을 합니다.)
-Point와 Pixel의 개념
-
-Point
-pt로 나타낸다
-포인트는 절대적인값 입니다.
-1인치를 72로 나눈 ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-05-29
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -621,7 +627,7 @@ pt로 나타낸다
             
         
             
-            <a href="/tags/#iOS" title="iOS" rel="16">iOS</a>
+            <a href="/tags/#iOS" title="iOS" rel="17">iOS</a>
             
         
             
@@ -671,6 +677,10 @@ pt로 나타낸다
     <ul>
       
         <li>
+          <a href="/2018/07/09/iOS/GCD(Grand Central Dispatch)/">[iOS] GCD(Grand Central Dispatch)</a>
+        </li>
+      
+        <li>
           <a href="/2018/07/09/Swift/Error Handling/">[Swift] Error Handling</a>
         </li>
       
@@ -686,10 +696,6 @@ pt로 나타낸다
           <a href="/2018/07/06/iOS/Shortcuts/">[iOS] Shortcuts</a>
         </li>
       
-        <li>
-          <a href="/2018/07/05/iOS/TabbarController/">[iOS] TabbarController</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -699,7 +705,7 @@ pt로 나타낸다
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">1</span></li></ul>
     </div>
 
         <hr>
@@ -707,7 +713,7 @@ pt로 나타낸다
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
     </div>
 
         <hr>
