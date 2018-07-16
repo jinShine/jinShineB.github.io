@@ -213,6 +213,44 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/04/iOS/DocumentInteraction/">
+        <h2 class="post-title">
+            [iOS] UIDocumentInteractionController
+        </h2>
+        <h3 class="post-subtitle">
+            UIDocumentInteractionController에 대해 알아 보겠습니다.
+        </h3>
+        <div class="post-content-preview">
+            UIDocumentInteractionController
+
+
+앱에서 직접 파일 형식을 처리 할 수 없는 파일을 미리보기와 파일을  다른앱에 전송해주는 컨트롤러입니다.
+
+아이폰을 사용하실때 이런 화면을 많이 보셨을거에요
+
+UIDocumentInteractionController에 대해 알아보겠습니다.
+사용방법도 간단합니다.
+
+DocumentInterac......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-07-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/02/iOS/App Sandbox/">
         <h2 class="post-title">
             [iOS] 앱 샌드박스(App Sandbox)와 Container Directory
@@ -323,23 +361,24 @@ switched to d......
 
 <div class="post-preview">
 
-    <a href="/2018/06/07/iOS/Delegate/">
+    <a href="/2018/06/07/iOS/AutoLayout/">
         <h2 class="post-title">
-            [iOS] 델리게이트(Delegate)
+            [iOS] 오토레이아웃(AutoLayout)과 Layout 개념
         </h2>
         <h3 class="post-subtitle">
-            델리게이트(Delegate)에 대해 알아 보겠습니다.
+            오토레이아웃(AutoLayout)과 Layout개념들에 대해 알아 보겠습니다.
         </h3>
         <div class="post-content-preview">
-            Delegate
+            AutoLayout
 
+Autolayout의 개념들에 관해 알아 보겠습니다.
 
-자신이 할 일을 다른 인스턴스에게 대신 처리하도록 구현하는 디자인 패턴
+AutoLayout은 뷰에 주어진 제약조건에 따라 뷰의 크기와 위치를 동적으로 계산해 배치하느것으로,
+외부 또는 내부의 변화에 동적으로 반응하여 유저 인터페이스 구성합니다.
 
-쉽게, 델리게이트는 어떤 객체가 해야 하는 일을 부분적으로 확장해서 대신 처리를 한다. 라고 정의 하고 싶습니다.
-주로 다음과 같은 상황에 사용
+iOS에선 이러한 layout을 구성할때 3가지의 주요 접근 방식이 있습니다.
 
-뷰가 받은 이벤트나 상태를 뷰컨트롤러에게 전달하여 처리하도록 함 (View -&gt; ViewController)......
+Frame 기반의 프......
         </div>
     </a>
     
@@ -359,24 +398,23 @@ switched to d......
 
 <div class="post-preview">
 
-    <a href="/2018/06/07/iOS/AutoLayout/">
+    <a href="/2018/06/07/iOS/Delegate/">
         <h2 class="post-title">
-            [iOS] 오토레이아웃(AutoLayout)과 Layout 개념
+            [iOS] 델리게이트(Delegate)
         </h2>
         <h3 class="post-subtitle">
-            오토레이아웃(AutoLayout)과 Layout개념들에 대해 알아 보겠습니다.
+            델리게이트(Delegate)에 대해 알아 보겠습니다.
         </h3>
         <div class="post-content-preview">
-            AutoLayout
+            Delegate
 
-Autolayout의 개념들에 관해 알아 보겠습니다.
 
-AutoLayout은 뷰에 주어진 제약조건에 따라 뷰의 크기와 위치를 동적으로 계산해 배치하느것으로,
-외부 또는 내부의 변화에 동적으로 반응하여 유저 인터페이스 구성합니다.
+자신이 할 일을 다른 인스턴스에게 대신 처리하도록 구현하는 디자인 패턴
 
-iOS에선 이러한 layout을 구성할때 3가지의 주요 접근 방식이 있습니다.
+쉽게, 델리게이트는 어떤 객체가 해야 하는 일을 부분적으로 확장해서 대신 처리를 한다. 라고 정의 하고 싶습니다.
+주로 다음과 같은 상황에 사용
 
-Frame 기반의 프......
+뷰가 받은 이벤트나 상태를 뷰컨트롤러에게 전달하여 처리하도록 함 (View -&gt; ViewController)......
         </div>
     </a>
     
@@ -466,41 +504,6 @@ Tuple/Row은 MongoDB에선 Docum......
 
 <div class="post-preview">
 
-    <a href="/2018/06/05/iOS/UserDefaults/">
-        <h2 class="post-title">
-            [iOS] UserDefaults
-        </h2>
-        <h3 class="post-subtitle">
-            UserDefaults에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            UserDefaults?
-
-iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
-간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
-
-보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
-UserDefaults는 싱글턴이고 standard로 관리를 하고,
-key-value 쌍으......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-05
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/2018/06/05/iOS/Singleton/">
         <h2 class="post-title">
             [iOS] 싱글턴(Singleton) in Swift
@@ -531,23 +534,22 @@ key-value 쌍으......
 
 <div class="post-preview">
 
-    <a href="/2018/06/05/iOS/Code Snippets/">
+    <a href="/2018/06/05/iOS/UserDefaults/">
         <h2 class="post-title">
-            [iOS] Code Snippet
+            [iOS] UserDefaults
         </h2>
         <h3 class="post-subtitle">
-            Code Snippet에 대해 알아 보겠습니다.
+            UserDefaults에 대해 알아보겠습니다.
         </h3>
         <div class="post-content-preview">
-            Code Snippets이란?
+            UserDefaults?
 
-정의를 찾아보면 작은 정보라는 의미 입니다.
-즉 생상성을 높이기 위한 작은 정보라고 볼 수 있습니다.
+iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
+간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
 
-
-#### **Code Snippets Library**
-![Imgur](https://i.imgur.com/3wBZHjZ.png)
-Xcode에서 기본적으로 제공하는 Snipptes뿐만 아니라 자기가 원하는 코드를 커......
+보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
+UserDefaults는 싱글턴이고 standard로 관리를 하고,
+key-value 쌍으......
         </div>
     </a>
     
@@ -609,7 +611,7 @@ Xcode에서 기본적으로 제공하는 Snipptes뿐만 아니라 자기가 원�
             
         
             
-            <a href="/tags/#Swift" title="Swift" rel="11">Swift</a>
+            <a href="/tags/#Swift" title="Swift" rel="12">Swift</a>
             
         
             
@@ -667,6 +669,10 @@ Xcode에서 기본적으로 제공하는 Snipptes뿐만 아니라 자기가 원�
     <ul>
       
         <li>
+          <a href="/2018/07/16/Swift/서브스크립트/">[Swift] 서브스크립트(Subscript)</a>
+        </li>
+      
+        <li>
           <a href="/2018/07/10/iOS/UIDevice/">[iOS] UIDevice</a>
         </li>
       
@@ -682,10 +688,6 @@ Xcode에서 기본적으로 제공하는 Snipptes뿐만 아니라 자기가 원�
           <a href="/2018/07/09/Swift/Error Handling/">[Swift] Error Handling</a>
         </li>
       
-        <li>
-          <a href="/2018/07/08/iOS/ARC (Memory Manager)/">[iOS] ARC(Automatic Reference Counting)</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -695,7 +697,7 @@ Xcode에서 기본적으로 제공하는 Snipptes뿐만 아니라 자기가 원�
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">2</span></li></ul>
     </div>
 
         <hr>
@@ -703,7 +705,7 @@ Xcode에서 기본적으로 제공하는 Snipptes뿐만 아니라 자기가 원�
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
     </div>
 
         <hr>
