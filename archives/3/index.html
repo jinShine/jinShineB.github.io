@@ -213,141 +213,6 @@
 
 <div class="post-preview">
 
-    <a href="/2018/06/07/MongoDB/BSON/">
-        <h2 class="post-title">
-            [MongoDB] BSON의 데이터 타입
-        </h2>
-        <h3 class="post-subtitle">
-            MongoDB의 BSON의 데이터 타입에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            BSON이란?
-
-
-Binary JSON(JavaScript Object Notaion)의 의미
-JSON의 일부지만 MongoDB에서 JSON으로는 부족함이 있어, 데이터를 저장하기 위한 BSON을 만듬.
-
-BSON 예시
-12345678910var document = &#123;  _id: ObjectId("579081734598df19822318"),......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-07
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#MongoDB" title="MongoDB">MongoDB</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/06/07/MongoDB/MongoDB 구조/">
-        <h2 class="post-title">
-            [MongoDB] MongoDB 구조
-        </h2>
-        <h3 class="post-subtitle">
-            MongoDB 구조에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            MongoDB 구조
-
-
-Document이 모여서 Collection이 되고, Collection들이 모여서 Database를 이룹니다.
-가장 많이 쓰이는 관계형 데이터베이스로 예를 들면
-Database는 MongoDB에서도 같은 용어 Database이며,
-Table은 MongoDB에선 Collection
-Tuple/Row은 MongoDB에선 Docum......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-07
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#MongoDB" title="MongoDB">MongoDB</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/06/05/iOS/UserDefaults/">
-        <h2 class="post-title">
-            [iOS] UserDefaults
-        </h2>
-        <h3 class="post-subtitle">
-            UserDefaults에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            UserDefaults?
-
-iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
-간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
-
-보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
-UserDefaults는 싱글턴이고 standard로 관리를 하고,
-key-value 쌍으......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-05
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/06/05/iOS/Singleton/">
-        <h2 class="post-title">
-            [iOS] 싱글턴(Singleton) in Swift
-        </h2>
-        <h3 class="post-subtitle">
-            싱글턴(Singleton)에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            Singleton패턴이란?
-싱글톤 패턴(Singleton Pattern) 을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용합니다.이와 같은 디자인 유형을 싱글톤 패턴이라고 한다.
-고정된 메모리 영역을 얻으면서 한번의 인스턴스를 사용하기 ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-05
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/2018/06/05/iOS/Code Snippets/">
         <h2 class="post-title">
             [iOS] Code Snippet
@@ -566,6 +431,143 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
 </div>
 <hr>
 
+<div class="post-preview">
+
+    <a href="/2018/05/25/Swift/타입체크(TypeCheck)/">
+        <h2 class="post-title">
+            [Swift] 타입체크(TypeCheck)와 타입캐스팅(Type Casing)
+        </h2>
+        <h3 class="post-subtitle">
+            타입체크(TypeCheck)와 타입캐스팅(Type Casing)에 대해 알아 보곘습니다.
+        </h3>
+        <div class="post-content-preview">
+            타입 체크(TypeCheck)
+스위프트의 타입캐스팅은 is와 as로 구현되어있고, 인스턴스의 타입을 확인하거나 자신을 다른 타입의 인스턴스인것처럼 사용될 수 있습니단.
+type(of:) - 타입확인
+123456789101112131415class className &#123;&#125;var anyArray: [Any] = [1, "2", 3.0]va......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-05-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Swift" title="Swift">Swift</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/05/24/Swift/Initializer/">
+        <h2 class="post-title">
+            [Swift] 이니셜라이저(Initializer)
+        </h2>
+        <h3 class="post-subtitle">
+            이니셜라이저(Initializer)에 대해 알아 보곘습니다.
+        </h3>
+        <div class="post-content-preview">
+            Initializer
+Swift 의 객체는 사용하기 전 모든 저장 프로퍼티에 대해 초기화 필수
+다음 3 가지 중 하나를 택해 설정
+
+초기값 지정
+옵셔널 - nil 값으로 초기화
+init() 사용
+
+12345678910111213141516171819202122232425262728293031//가능class Rectangle &#123;  var va......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-05-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Swift" title="Swift">Swift</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/05/23/Swift/옵셔널/">
+        <h2 class="post-title">
+            [Swift] 옵셔널(Optionals)
+        </h2>
+        <h3 class="post-subtitle">
+            옵셔널(Optionals)에 대해 알아 보곘습니다.
+        </h3>
+        <div class="post-content-preview">
+            옵셔널
+
+옵셔널은 스위프트의 특징 중 하나인 안전성(Safe)를 담당하는 기능입니다.
+다른 언어에서 볼 수 없었던 옵셔널이란 무엇일까요?
+단어 뜻 그래도 옵셔널은 선택적인,즉 값이 있을수도 있고 없을 수도 있다는 뜻을 나타냅니다.
+이는 변수나 상수에 나타낼 수 있는데 상수나 변수에는 꼭 값이 있다는 보장이 없죠? 값이 없을땐 nil일 수도 있다는 뜻입......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-05-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Swift" title="Swift">Swift</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/05/23/Swift/프로퍼티/">
+        <h2 class="post-title">
+            [Swift] 프로퍼티(Property)
+        </h2>
+        <h3 class="post-subtitle">
+            프로퍼티(Property)에 대해 알아 보곘습니다.
+        </h3>
+        <div class="post-content-preview">
+            프로퍼티와 메서드
+프로퍼티는 클래스, 구조체, 열거형등에 관련된 값을 뜻하고,
+메서드는 특정 타입에 관련된 함수를 뜻한다.
+1. 프로퍼티
+프로퍼티 크게 5가지
+
+저장 프로퍼티(Stored Properties)
+지연 저장 프로퍼티(Lazy Stroed Properties)
+연산 프로퍼티(Computed Properties)
+프로퍼티 감시자(Propert......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-05-23
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Swift" title="Swift">Swift</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
 
 
 <!-- Pager -->
@@ -610,11 +612,11 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
             
         
             
-            <a href="/tags/#Swift" title="Swift" rel="13">Swift</a>
+            <a href="/tags/#Swift" title="Swift" rel="12">Swift</a>
             
         
             
-            <a href="/tags/#컴퓨터 기초" title="컴퓨터 기초" rel="5">컴퓨터 기초</a>
+            <a href="/tags/#컴퓨터 기초" title="컴퓨터 기초" rel="2">컴퓨터 기초</a>
             
         
             
@@ -668,23 +670,23 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
     <ul>
       
         <li>
-          <a href="/2018/07/19/Swift/Codable/">[Swift] Codable</a>
-        </li>
-      
-        <li>
-          <a href="/2018/07/18/컴퓨터 기초/JSON개념/">[컴퓨터 기초] JSON(Javascript Object Notation)</a>
-        </li>
-      
-        <li>
-          <a href="/2018/07/18/컴퓨터 기초/빅 엔디안과 리틀 엔디안/">[컴퓨터 기초] 빅 엔디안(Big Endian)과 리틀 엔디안(Little Endian)</a>
-        </li>
-      
-        <li>
-          <a href="/2018/07/17/컴퓨터 기초/네트워크 기초/">[컴퓨터 기초] 네트워크 기초</a>
-        </li>
-      
-        <li>
           <a href="/2018/07/16/Swift/서브스크립트/">[Swift] 서브스크립트(Subscript)</a>
+        </li>
+      
+        <li>
+          <a href="/2018/07/10/iOS/UIDevice/">[iOS] UIDevice</a>
+        </li>
+      
+        <li>
+          <a href="/2018/07/10/컴퓨터 기초/Thread, Process, Context Switch/">[컴퓨터 기초] Thread,Process,Context Switching</a>
+        </li>
+      
+        <li>
+          <a href="/2018/07/09/iOS/GCD(Grand Central Dispatch)/">[iOS] GCD(Grand Central Dispatch)</a>
+        </li>
+      
+        <li>
+          <a href="/2018/07/09/Swift/Error Handling/">[Swift] Error Handling</a>
         </li>
       
     </ul>
@@ -696,7 +698,7 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">5</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">2</span></li></ul>
     </div>
 
         <hr>
@@ -704,7 +706,7 @@ nib파일을 사용하는 경우나, Info.plist 파일을 읽어들여 파일에
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">13</span></li></ul>
     </div>
 
         <hr>
