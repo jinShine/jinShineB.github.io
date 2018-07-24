@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="jinShine 개발 블로그, jinShine, jinShine blog, iOS, storyboard, Swift, Objective-c, iOS 블로그, Data Structure, Algorithm, Computer Science">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [컴퓨터 기초] JSON(Javascript Object Notation) - jinShine | 김승진
+        
+    </title>
+
+    <link rel="canonical" href="https://jinShine.github.io/jinShine/2018/07/18/컴퓨터 기초/JSON개념/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/postImage/Computer_basic.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#컴퓨터 기초" title="컴퓨터 기초">컴퓨터 기초</a>
+                            
+                        </div>
+                        <h1>[컴퓨터 기초] JSON(Javascript Object Notation)</h1>
+                        <h2 class="subheading">JSON(Javascript Object Notation) 개념에 대해 알아 보겠습니다.</h2>
+                        <span class="meta">
+                            Posted by jinShine on
+                            2018-07-18
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">jinShine Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="json">JSON</span></h1>
+<hr>
+<p>Javascript 언어로부터 파생 (JavaScript Object Notation)언어로써  프로그래밍 언어와 플랫폼 간 독립적이고 가벼워서 XML 방식을 대체하여 현재 거의 표준으로 사용되고 있는 데이터 교환 형식입니다.</p>
+<p>두개의 구조를 기본으로 가집니다.</p>
+<ol>
+<li>‘Name : Value’ 형태의 쌍을 이루는 콜렉션 타입. 각 언어에서 Hash table, Dictionary 등으로 구현</li>
+<li>값들의 순서화된 리스트. 대부분의 언어들에서 Array, Vector, List 또는 Sequence 로 구현</li>
+</ol>
+<p>XML 에 비해 기능이 적고 구조가 단순하여 파싱이 쉽고 빠르며 적은 용량으로 저장 가능합니다. 따라서 사람이 읽고 쓰는 것뿐 아니라 기계가 분석하고 생성하는 것에도 (상대적으로) 더 용이하다고 볼 수 있습니다.</p>
+<p><strong>contents type 은 application/json 이며, 파일 확장자는 .json, 기본 인코딩은 UTF-8 을 사용</strong></p>
+<h3><span id="json-format-example">JSON Format Example</span></h3>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"widget"</span>: &#123;</span><br><span class="line">        <span class="attr">"debug"</span>: <span class="string">"on"</span>,</span><br><span class="line">        <span class="attr">"window"</span>: &#123;</span><br><span class="line">            <span class="attr">"title"</span>: <span class="string">"Sample Konfabulator Widget"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"main_window"</span>,</span><br><span class="line">            <span class="attr">"width"</span>: <span class="number">500</span>,</span><br><span class="line">            <span class="attr">"height"</span>: <span class="number">500</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="attr">"text"</span>: &#123;</span><br><span class="line">        <span class="attr">"data"</span>: <span class="string">"Click Here"</span>,</span><br><span class="line">        <span class="attr">"size"</span>: <span class="number">36</span>,</span><br><span class="line">        <span class="attr">"style"</span>: <span class="string">"bold"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"text1"</span>,</span><br><span class="line">        <span class="attr">"hOffset"</span>: <span class="number">250</span>,</span><br><span class="line">        <span class="attr">"vOffset"</span>: <span class="number">100</span>,</span><br><span class="line">        <span class="attr">"alignment"</span>: <span class="string">"center"</span>,</span><br><span class="line">        <span class="attr">"onMouseUp"</span>: <span class="string">"sun1.opacity = (sun1.opacity / 100) * 90;"</span></span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="xml-format-example">XML Format Example</span></h3>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">widget</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">debug</span>&gt;</span>on<span class="tag">&lt;/<span class="name">debug</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">window</span> <span class="attr">title</span>=<span class="string">"Sample Konfabulator Widget"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>main_window<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">width</span>&gt;</span>500<span class="tag">&lt;/<span class="name">width</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">height</span>&gt;</span>500<span class="tag">&lt;/<span class="name">height</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">window</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">data</span>=<span class="string">"Click Here"</span> <span class="attr">size</span>=<span class="string">"36"</span> <span class="attr">style</span>=<span class="string">"bold"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>text1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hOffset</span>&gt;</span>250<span class="tag">&lt;/<span class="name">hOffset</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">vOffset</span>&gt;</span>100<span class="tag">&lt;/<span class="name">vOffset</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">alignment</span>&gt;</span>center<span class="tag">&lt;/<span class="name">alignment</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">onMouseUp</span>&gt;</span></span><br><span class="line">            sun1.opacity = (sun1.opacity / 100) * 90;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">onMouseUp</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">widget</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="json의-속성">JSON의 속성</span></h2>
+<ul>
+<li>JSON 으로 변환되기 위한 Foundation 객체는 다음 속성을 따라야 함</li>
+<li>Top Level Object : NSArray, NSDictionary</li>
+<li>모든 객체는 NSString, NSNumber, NSArray, NSDictionary, NSNull 의 인스턴스</li>
+<li>모든 Dictionary 의 Key 는 NSString 인스턴스</li>
+<li>숫자는 NaN 이나 무한대 값이 아니어야 함</li>
+</ul>
+<h4><span id="object">Object</span></h4>
+<blockquote>
+<p>object 는 name/value 쌍들의 비순서화된 SET<br>
+좌측 중괄호( { ) 로 시작하고 우측 중괄호( } ) 로 끝내어 표현<br>
+name 뒤 콜론(:) 을 붙이고 콤마(,)로 name/value 쌍들을 구분</p>
+</blockquote>
+<p><img src="https://i.imgur.com/dpAg2UE.png" alt="Imgur"></p>
+<h4><span id="array">Array</span></h4>
+<blockquote>
+<p>값들의 순서화된 Collection<br>
+좌측 대괄호( [ )로 시작해서 우측 대괄호 ( ] ) 로 끝내어 표현하고 콤마(,)로 각 값들을 구분</p>
+</blockquote>
+<p><img src="https://i.imgur.com/sNM76x2.png" alt="Imgur"></p>
+<h4><span id="value">Value</span></h4>
+<blockquote>
+<p>큰 따옴표안에 string, number, true, false, null, object, array 등의 구조가 포함</p>
+</blockquote>
+<p><img src="https://i.imgur.com/GNO7UgO.png" alt="Imgur"></p>
+<h4><span id="string">String</span></h4>
+<blockquote>
+<p>큰 따옴표 (“ ”) 안에 둘러 싸인 0 이상의 Unicode 문자들의 조합이며 backslash escape 가 적용</p>
+</blockquote>
+<p><img src="https://i.imgur.com/VnreM9n.png" alt="Imgur"></p>
+<h4><span id="number">Number</span></h4>
+<blockquote>
+<p>8진수와 16진후 형식을 사용하지 않는 것을 제외하면 C, JAVA 등의 number 와 유사</p>
+</blockquote>
+<p><img src="https://i.imgur.com/j2fB7RK.png" alt="Imgur"></p>
+<h2><span id="jsonserialization">JSONSerialization</span></h2>
+<p>JSON 과 이에 상응하는 Foundation 객체 간 변환하는 객체이며 iOS 7 이후로 Thread Safety합니다.</p>
+<p>Data 는 다음의 5가지 인코딩 지원 형식 중 하나여야 하며, 이 중 UTF-8 이 기본값으로 쓰이고 가장 효율적<br>
+(UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE)</p>
+<h4><span id="json-object만들기">JSON Object만들기</span></h4>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Returns a Foundation object from given JSON data.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">jsonObject</span>(<span class="title">with</span>: <span class="title">Data</span>, <span class="title">options</span>: <span class="title">JSONSerialization</span>.<span class="title">ReadingOptions</span> = [])</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">// <span class="title">Returns</span> <span class="title">a</span> <span class="title">Foundation</span> <span class="title">object</span> <span class="title">from</span> <span class="title">given</span> <span class="title">JSON</span> <span class="title">data</span> <span class="title">in</span> <span class="title">a</span> <span class="title">given</span> <span class="title">stream</span>.</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">func</span> <span class="title">jsonObject</span>(<span class="title">with</span>: <span class="title">InputStream</span>, <span class="title">options</span>: <span class="title">JSONSerialization</span>.<span class="title">ReadingOptions</span> = [])</span></span><br></pre></td></tr></table></figure>
+<h4><span id="json-object만들기">JSON Object만들기</span></h4>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Returns JSON data from a Foundation object.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">data</span>(<span class="title">withJSONObject</span>: <span class="title">Any</span>, <span class="title">options</span>: <span class="title">JSONSerialization</span>.<span class="title">WritingOptions</span> = [])</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">// <span class="title">Writes</span> <span class="title">a</span> <span class="title">given</span> <span class="title">JSON</span> <span class="title">object</span> <span class="title">to</span> <span class="title">a</span> <span class="title">stream</span>.</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">func</span> <span class="title">writeJSONObject</span>(<span class="title">Any</span>, <span class="title">to</span>: <span class="title">OutputStream</span>, <span class="title">options</span>: <span class="title">JSONSerialization</span>.<span class="title">WritingOption</span> = [], <span class="title">error</span>: <span class="title">NSErrorPointer</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//<span class="title">Returns</span> <span class="title">a</span> <span class="title">Boolean</span> <span class="title">value</span> <span class="title">that</span> <span class="title">indicate</span> <span class="title">whether</span> <span class="title">a</span> <span class="title">given</span> <span class="title">object</span> <span class="title">can</span> <span class="title">be</span> <span class="title">converted</span> <span class="title">to</span> <span class="title">JSON</span> <span class="title">data</span>.</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">func</span> <span class="title">isValidJSONObject</span>(<span class="title">Any</span>)</span></span><br></pre></td></tr></table></figure>
+<h4><span id="jsonserializationreadingoptions">JSONSerialization.ReadingOptions</span></h4>
+<blockquote>
+<p>2 개의 mutable 옵션은 Swift 에서 var 타입 변수 생성으로 대체<br>
+.allowFragments - 파싱하려는 JSON Data 가 Array/Dictionary 가 아닌 경우에도 허용</p>
+</blockquote>
+<p><strong>mutable이 들어간 옵션은 Objective-c를 위한 옵션이고,<br>
+Swift에선 allowFragments를 씁니다.</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@available</span>(iOS <span class="number">5.0</span>, *)</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ReadingOptions</span> : <span class="title">OptionSet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">init</span>(rawValue: <span class="type">UInt</span>)</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">var</span> mutableContainers: <span class="type">JSONSerialization</span>.<span class="type">ReadingOptions</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">var</span> mutableLeaves: <span class="type">JSONSerialization</span>.<span class="type">ReadingOptions</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">var</span> allowFragments: <span class="type">JSONSerialization</span>.<span class="type">ReadingOptions</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="jsonserializationwritingoptions">JSONSerialization.WritingOptions</span></h4>
+<blockquote>
+<p>.prettyPrinted - 사람이 읽기 편하도록 json 문자열 중간에 whitespace 를 삽입하고, 이 옵션이 없을 경우 가장 압축된 형태의 JSON 생성<br>
+.sortedKeys - Dictionary 키를 systemLocale에 맞춰 정렬 후 출력. 비교는 NSNumericSearch 기준</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@available</span>(iOS <span class="number">5.0</span>, *)</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">WritingOptions</span> : <span class="title">OptionSet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">init</span>(rawValue: <span class="type">UInt</span>)</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">var</span> prettyPrinted: <span class="type">JSONSerialization</span>.<span class="type">WritingOptions</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@available</span>(iOS <span class="number">11.0</span>, *)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">var</span> sortedKeys: <span class="type">JSONSerialization</span>.<span class="type">WritingOptions</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2><span id="json-in-swift">JSON in Swift</span></h2>
+<h5><span id="1-예제">1. 예제</span></h5>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> jsonString = <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    "</span>someNumber<span class="string">" : 1,</span></span><br><span class="line"><span class="string">    "</span>someString<span class="string">" : "</span><span class="type">Hello</span><span class="string">",</span></span><br><span class="line"><span class="string">    "</span>someArray<span class="string">"  : [1, 2, 3, 4],</span></span><br><span class="line"><span class="string">    "</span>someDict<span class="string">"   : &#123;</span></span><br><span class="line"><span class="string">        "</span>someBool<span class="string">" : true</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line"><span class="comment">// 1. data로 변환.</span></span><br><span class="line"><span class="keyword">let</span> jsonData = jsonString.data(using: .utf8)!</span><br><span class="line"><span class="comment">// 2. JSON Object로 변환.</span></span><br><span class="line"><span class="keyword">let</span> jsonObject = <span class="keyword">try</span>! <span class="type">JSONSerialization</span>.jsonObject(with: jsonData)</span><br><span class="line"><span class="built_in">print</span>(jsonObject)</span><br></pre></td></tr></table></figure>
+<h5><span id="2-예제">2. 예제</span></h5>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">jsonObjectWithData</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="keyword">let</span> jsonString = <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">    &#123; "</span>hello<span class="string">": "</span>world<span class="string">", "</span>foo<span class="string">": "</span>bar<span class="string">", "</span>iOS<span class="string">": "</span><span class="type">Swift</span><span class="string">" &#125;</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. data로 변환.</span></span><br><span class="line"><span class="keyword">let</span> jsonData = jsonString.data(using: .utf8)!</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="comment">// 2. JSON Object로 변환.</span></span><br><span class="line">    <span class="keyword">let</span> jsonObject = <span class="keyword">try</span> <span class="type">JSONSerialization</span>.jsonObject(with: jsonData)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> jsonDict = jsonObject <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">Any</span>] &#123;</span><br><span class="line">        <span class="built_in">print</span>(jsonDict)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(error.localizedDescription)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/07/19/Swift/Codable/" data-toggle="tooltip" data-placement="top" title="[Swift] Codable">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/18/컴퓨터 기초/빅 엔디안과 리틀 엔디안/" data-toggle="tooltip" data-placement="top" title="[컴퓨터 기초] 빅 엔디안(Big Endian)과 리틀 엔디안(Little Endian)">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#컴퓨터 기초" title="컴퓨터 기초">컴퓨터 기초</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "https://jinShine.github.io/jinShine/2018/07/18/컴퓨터 기초/JSON개념/";
+    var disqus_url = "https://jinShine.github.io/jinShine/2018/07/18/컴퓨터 기초/JSON개념/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; jinShine 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://jinShine.github.io/jinShine/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-122819413-1';
+    var _gaDomain = 'https://jinshine.github.io';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://jinShine.github.io/jinShine/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
