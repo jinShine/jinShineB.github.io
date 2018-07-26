@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>https://jinShine.github.io/jinShine/2018/07/10/%EC%BB%B4%ED%93%A8%ED%84%B0%20%EA%B8%B0%EC%B4%88/Thread,%20Process,%20Context%20Switch/</loc>
+        <lastmod>2018-07-26T14:24:40.253Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jinShine.github.io/jinShine/2018/07/16/Swift/%EC%84%9C%EB%B8%8C%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/</loc>
         <lastmod>2018-07-16T12:50:31.449Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -25,14 +33,6 @@
     <url>
         <loc>https://jinShine.github.io/jinShine/2018/05/17/%EC%BB%B4%ED%93%A8%ED%84%B0%20%EA%B8%B0%EC%B4%88/%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B5%AC%EC%A1%B0/</loc>
         <lastmod>2018-07-10T01:05:28.022Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jinShine.github.io/jinShine/2018/07/10/%EC%BB%B4%ED%93%A8%ED%84%B0%20%EA%B8%B0%EC%B4%88/Thread,%20Process,%20Context%20Switch/</loc>
-        <lastmod>2018-07-09T16:56:37.611Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
