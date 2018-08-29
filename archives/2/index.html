@@ -213,6 +213,76 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/05/iOS/TabbarController/">
+        <h2 class="post-title">
+            [iOS] TabbarController
+        </h2>
+        <h3 class="post-subtitle">
+            TabbarController 대해 알아 보겠습니다.
+        </h3>
+        <div class="post-content-preview">
+            TabbarController?
+
+
+한가지를 선택할 수 있는 라디오 스타일의 컨테이너 뷰 컨트롤러.
+여기서 선택은 표시할 자식 뷰 컨트롤러를 말합니다.
+
+
+UITabBar
+
+하나 이상의 버튼을 이용해 서로 다른 작업이나 뷰, 모델 등을 선택해 제어하기 위한 바 보통 UITabBarController 와 결합해 많이 쓰지만 단독으로도 활용 가능 UITo......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-07-05
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/05/iOS/NotificationCenter/">
+        <h2 class="post-title">
+            [iOS] NotificationCenter
+        </h2>
+        <h3 class="post-subtitle">
+            NotificationCenter에 대해 알아 보겠습니다.
+        </h3>
+        <div class="post-content-preview">
+            NotificationCenter?
+
+NotificationCenter의 동작에 대해 먼저 이야기 해보겠습니다.
+
+NotificationCenter에 등록된 Event가 발생하면 해당 Event를에 대한 행동을 취하는것.
+앱 내에서 아무데서나 메시지를 던지면 앱 내의 아무데서나 이 메시지를 받을 수 있게 해 주는 것이 NSNotificationCent......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by jinShine on
+            2018-07-05
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/04/iOS/DocumentInteraction/">
         <h2 class="post-title">
             [iOS] UIDocumentInteractionController
@@ -361,24 +431,23 @@ switched to d......
 
 <div class="post-preview">
 
-    <a href="/2018/06/07/iOS/AutoLayout/">
+    <a href="/2018/06/07/iOS/Delegate/">
         <h2 class="post-title">
-            [iOS] 오토레이아웃(AutoLayout)과 Layout 개념
+            [iOS] 델리게이트(Delegate)
         </h2>
         <h3 class="post-subtitle">
-            오토레이아웃(AutoLayout)과 Layout개념들에 대해 알아 보겠습니다.
+            델리게이트(Delegate)에 대해 알아 보겠습니다.
         </h3>
         <div class="post-content-preview">
-            AutoLayout
+            Delegate
 
-Autolayout의 개념들에 관해 알아 보겠습니다.
 
-AutoLayout은 뷰에 주어진 제약조건에 따라 뷰의 크기와 위치를 동적으로 계산해 배치하느것으로,
-외부 또는 내부의 변화에 동적으로 반응하여 유저 인터페이스 구성합니다.
+자신이 할 일을 다른 인스턴스에게 대신 처리하도록 구현하는 디자인 패턴
 
-iOS에선 이러한 layout을 구성할때 3가지의 주요 접근 방식이 있습니다.
+쉽게, 델리게이트는 어떤 객체가 해야 하는 일을 부분적으로 확장해서 대신 처리를 한다. 라고 정의 하고 싶습니다.
+주로 다음과 같은 상황에 사용
 
-Frame 기반의 프......
+뷰가 받은 이벤트나 상태를 뷰컨트롤러에게 전달하여 처리하도록 함 (View -&gt; ViewController)......
         </div>
     </a>
     
@@ -398,23 +467,24 @@ Frame 기반의 프......
 
 <div class="post-preview">
 
-    <a href="/2018/06/07/iOS/Delegate/">
+    <a href="/2018/06/07/iOS/AutoLayout/">
         <h2 class="post-title">
-            [iOS] 델리게이트(Delegate)
+            [iOS] 오토레이아웃(AutoLayout)과 Layout 개념
         </h2>
         <h3 class="post-subtitle">
-            델리게이트(Delegate)에 대해 알아 보겠습니다.
+            오토레이아웃(AutoLayout)과 Layout개념들에 대해 알아 보겠습니다.
         </h3>
         <div class="post-content-preview">
-            Delegate
+            AutoLayout
 
+Autolayout의 개념들에 관해 알아 보겠습니다.
 
-자신이 할 일을 다른 인스턴스에게 대신 처리하도록 구현하는 디자인 패턴
+AutoLayout은 뷰에 주어진 제약조건에 따라 뷰의 크기와 위치를 동적으로 계산해 배치하느것으로,
+외부 또는 내부의 변화에 동적으로 반응하여 유저 인터페이스 구성합니다.
 
-쉽게, 델리게이트는 어떤 객체가 해야 하는 일을 부분적으로 확장해서 대신 처리를 한다. 라고 정의 하고 싶습니다.
-주로 다음과 같은 상황에 사용
+iOS에선 이러한 layout을 구성할때 3가지의 주요 접근 방식이 있습니다.
 
-뷰가 받은 이벤트나 상태를 뷰컨트롤러에게 전달하여 처리하도록 함 (View -&gt; ViewController)......
+Frame 기반의 프......
         </div>
     </a>
     
@@ -502,71 +572,6 @@ Tuple/Row은 MongoDB에선 Docum......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/06/05/iOS/Singleton/">
-        <h2 class="post-title">
-            [iOS] 싱글턴(Singleton) in Swift
-        </h2>
-        <h3 class="post-subtitle">
-            싱글턴(Singleton)에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            Singleton패턴이란?
-싱글톤 패턴(Singleton Pattern) 을 따르는 클래스는, 생성자가 여러 차례 호출되더라도 실제로 생성되는 객체는 하나이고 최초 한번만 메모리를 할당하고(Static) 그 메모리에 인스턴스를 만들어 사용합니다.이와 같은 디자인 유형을 싱글톤 패턴이라고 한다.
-고정된 메모리 영역을 얻으면서 한번의 인스턴스를 사용하기 ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-05
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/06/05/iOS/UserDefaults/">
-        <h2 class="post-title">
-            [iOS] UserDefaults
-        </h2>
-        <h3 class="post-subtitle">
-            UserDefaults에 대해 알아보겠습니다.
-        </h3>
-        <div class="post-content-preview">
-            UserDefaults?
-
-iOS 에서 데이터를 파일에 저장하기 위해 사용하는 대표적인 클래스 중 하나
-간단한 정보를 저장하고 불러올 때 사용하며 내부적으로 plist 파일로 저장
-
-보통 로그인,설정,Version정보등의 간단한 정보를 저장할때 많이 사용합니다.
-UserDefaults는 싱글턴이고 standard로 관리를 하고,
-key-value 쌍으......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by jinShine on
-            2018-06-05
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#iOS" title="iOS">iOS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -626,6 +631,10 @@ key-value 쌍으......
             <a href="/tags/#MongoDB" title="MongoDB" rel="4">MongoDB</a>
             
         
+            
+            <a href="/tags/#Swift, Algorithm" title="Swift, Algorithm" rel="2">Swift, Algorithm</a>
+            
+        
     </div>
 </section>
 
@@ -669,6 +678,14 @@ key-value 쌍으......
     <ul>
       
         <li>
+          <a href="/2018/08/29/알고리즘/큐(Queue)/">[Algorithm] 큐(Queue)</a>
+        </li>
+      
+        <li>
+          <a href="/2018/08/29/알고리즘/스택(Stack)/">[Algorithm] 스택(Stack)</a>
+        </li>
+      
+        <li>
           <a href="/2018/07/16/Swift/서브스크립트/">[Swift] 서브스크립트(Subscript)</a>
         </li>
       
@@ -680,14 +697,6 @@ key-value 쌍으......
           <a href="/2018/07/10/컴퓨터 기초/Thread, Process, Context Switch/">[컴퓨터 기초] Thread,Process,Context Switching</a>
         </li>
       
-        <li>
-          <a href="/2018/07/09/iOS/GCD(Grand Central Dispatch)/">[iOS] GCD(Grand Central Dispatch)</a>
-        </li>
-      
-        <li>
-          <a href="/2018/07/09/Swift/Error Handling/">[Swift] Error Handling</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -697,7 +706,7 @@ key-value 쌍으......
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MongoDB/">MongoDB</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/컴퓨터-기초/">컴퓨터 기초</a><span class="category-list-count">3</span></li></ul>
     </div>
 
         <hr>
@@ -705,7 +714,7 @@ key-value 쌍으......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">14</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">8월 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7월 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">6월 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5월 2018</a><span class="archive-list-count">14</span></li></ul>
     </div>
 
         <hr>
